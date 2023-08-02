@@ -22,10 +22,6 @@ public:
     void set_pz90(double, double);
 
     void set_sk42(double, double);
-
-    void pz90_to_sk42();
-
-    double sin_pz90_B(int);
 };
 
 
