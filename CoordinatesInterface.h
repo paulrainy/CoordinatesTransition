@@ -29,7 +29,6 @@ protected:
     virtual void array_pz90_to_sk42() = 0; //преобразование массива географических в плоские
     virtual void array_sk42_to_pz90() = 0; //преобразование массива плоских в географические
 
-    virtual double sin_pz90_B(int) = 0; //метод, сокращающий подсчёты синусов широты и долготы в соответствующих формулах
 };
 
 #endif //COORDINATESEX_COORDINATESINTERFACE_H
