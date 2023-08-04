@@ -43,6 +43,8 @@ private:
     //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.25784;
 
+
+
 };
 
 
