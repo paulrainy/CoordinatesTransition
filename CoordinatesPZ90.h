@@ -42,9 +42,24 @@ private:
     const double MAJOR_AXIS_CONST = 6378136;
     //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.25784;
+    //Сжатие общеземного эллипсоида
 
+    double geo_B, geo_L, geo_dist_l, pz90_answ_X, pz90_answ_Y;
+    int geo_zone_n;
 
+public:
+    double get_geodetic_latitude_B() override;
+    double get_geodetic_longitude_L() override;
+    double get_rectangular_X() override;
+    double get_rectangular_Y() override;
 
+    void set_geodetic_coordinates(double, double) override;
+    void set_rectangular_coordinates(double, double) override;
+
+    void geodetic_to_rectangular(double, double) override;
+    void rectangular_to_geodetic(double, double) override;
+
+    double sin_help_B(int);
 };
 
 
