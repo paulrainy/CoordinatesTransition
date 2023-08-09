@@ -39,28 +39,39 @@ private:
     //Геоцентрическая гравитационная постоянная Земли (с учетом атмосферы) (fM)
     const double ANGULAR_VELOCITY_CONST = 7.292115 * pow(10, -5);
     //Угловая скорость вращения Земли
-    const double MAJOR_AXIS_CONST = 6378136;
+    const double SEMI_MAJOR_AXIS_CONST = 6378136;
     //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.25784;
     //Сжатие общеземного эллипсоида
 
-    double geo_B, geo_L, geo_dist_l, pz90_answ_X, pz90_answ_Y;
-    int geo_zone_n;
+    //const double PI = 3.1415926535;
+
+    double geodeticLatitudeB{};//геодезическая широта пз90 (B)
+    double geodeticLongitudeL{}; //геодезическая долгота пз90 (L)
+    double rectangularX{}; // ось X пз90
+    double rectangularY{}; // ось Y пз90
+
+    double geoB{}, geoL{}, geoDistL{}, geoAnswX{}, geoAnswY{};
+    int geoZoneN{}, rectZoneN{};
+    double rectDeltaB{}, rectDistL{}, rectHelpBeta{}, rectHelpB0{}, rect_help_z{}, rect_answ_B{}, rect_answ_L{};
+
+    double sinHelpB(int); //метод, сокращающий подсчёты синусов широты и долготы в соответствующих формулах перевода
+    double powHelpL2() const; //метод, сокращающий подсчёты степени числа l
+
+    void checkGeodeticNum(double, double) override;
 
 public:
-    double get_geodetic_latitude_B() override;
-    double get_geodetic_longitude_L() override;
-    double get_rectangular_X() override;
-    double get_rectangular_Y() override;
+    double getGeodeticLatitudeB() override;
+    double getGeodeticLongitudeL() override;
+    double getRectangularX() override;
+    double getRectangularY() override;
 
-    void set_geodetic_coordinates(double, double) override;
-    void set_rectangular_coordinates(double, double) override;
+    void setGeodeticCoordinates(double, double) override;
+    void setRectangularCoordinates(double, double) override;
 
-    void geodetic_to_rectangular(double, double) override;
-    void rectangular_to_geodetic(double, double) override;
+    void geodeticToRectangular() override;
+    void rectangularToGeodetic() override;
 
-    double sin_help_B(int);
 };
-
 
 #endif //COORDINATESEX_COORDINATESPZ90_H
