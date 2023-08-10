@@ -7,4 +7,6 @@ add_executable(CoordinatesEx main.cpp CoordinatesInterface.h
         CoordinatesPZ90.cpp
         CoordinatesPZ90.h
         CoordinatesSK42.cpp
-        CoordinatesSK42.h)
+        CoordinatesSK42.h
+        CoordinatesFacade.cpp
+        CoordinatesFacade.h)

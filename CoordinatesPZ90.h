@@ -53,7 +53,7 @@ private:
 
     double geoB{}, geoL{}, geoDistL{}, geoAnswX{}, geoAnswY{};
     int geoZoneN{}, rectZoneN{};
-    double rectDeltaB{}, rectDistL{}, rectHelpBeta{}, rectHelpB0{}, rect_help_z{}, rect_answ_B{}, rect_answ_L{};
+    double rectDeltaB{}, rectDistL{}, rectHelpBeta{}, rectHelpB0{}, rectHelpZ{}, rectAnswB{}, rectAnswL{};
 
     double sinHelpB(int); //метод, сокращающий подсчёты синусов широты и долготы в соответствующих формулах перевода
     double powHelpL2() const; //метод, сокращающий подсчёты степени числа l

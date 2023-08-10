@@ -20,16 +20,14 @@ double CoordinatesPZ90::getRectangularY() {
     return rectangularY;
 }
 
-void CoordinatesPZ90::checkGeodeticNum(double testNum1, double testNum2) { // checkGeodeticNum cammal style предпочтительнее
+void CoordinatesPZ90::checkGeodeticNum(double testNum1, double testNum2) {
     try {
-        if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)) throw std::exception();
-        if (testNum2 < (-1.0 * M_PI) || testNum2 > M_PI) throw std::exception();
+        if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)) throw std::string{"wrong latitude!"};
+        if (testNum2 < (-1.0 * M_PI) || testNum2 > M_PI) throw std::string{"wrong longitude!"};
     }
-    catch (std::exception()){ //убрать стд эксепшионы
+    catch (std::string errorMessage){
         std::cout << "wrong latitude or longitude!" << std::endl;
-        std::cout << "resetting coordinates to (0, 0)" << std::endl;
-        geodeticLatitudeB = 0;
-        geodeticLongitudeL = 0;
+        delete[] this;
     }
 }
 
@@ -78,22 +76,22 @@ void CoordinatesPZ90::rectangularToGeodetic() {
     rectHelpBeta = getRectangularX() / 6367558.4968; //вспомогательное величинв бета
     rectZoneN = static_cast<int>(getRectangularY() * pow(10, -6)); //номер шестиградусной зоны (n)
     rectHelpB0 = rectHelpBeta + sin(2 * rectHelpBeta) * (0.00252588685 - 0.00001491860
-                                                                         * pow((sin(rectHelpBeta)), 2) + 0.00000011904 * pow((sin(rectHelpBeta)), 4));
+            * pow((sin(rectHelpBeta)), 2) + 0.00000011904 * pow((sin(rectHelpBeta)), 4));
     //геодезическая широта точки, абсцисса которой равна х, а ордината равна 0
-    rect_help_z = (getRectangularY() - (10 * rectZoneN + 5) * pow(10, 5)) / (6378245 * cos(rectHelpB0));
+    rectHelpZ = (getRectangularY() - (10 * rectZoneN + 5) * pow(10, 5)) / (6378245 * cos(rectHelpB0));
     //вспомогательная величина
-    rectDeltaB = -1 * pow(rect_help_z, 2) * sin(2 * rectHelpB0) * (0.251684631 - 0.003369263 * pow(sin(rectHelpB0), 2) + 0.00001127 * pow(sin(rectHelpB0), 4)
-                                                                   - pow(rect_help_z, 2) * (0.10500614 - 0.04559916 * pow(sin(rectHelpB0), 2) + 0.00228901 * pow(sin(rectHelpB0), 4) - 0.00002987 * pow(sin(rectHelpB0), 6)
-                                                                                            - pow(rect_help_z, 2) * (0.042858 - 0.025318 * pow(sin(rectHelpB0), 2) + 0.014346 * pow(sin(rectHelpB0), 4) - 0.001264 * pow(sin(rectHelpB0), 6)
-                                                                                                                     - pow(rect_help_z, 2) * (0.01672 - 0.00630 * pow(sin(rectHelpB0), 2) + 0.01188 * pow(sin(rectHelpB0), 4) - 0.00328 * pow(sin(rectHelpB0), 6)))));
+    rectDeltaB = -1 * pow(rectHelpZ, 2) * sin(2 * rectHelpB0) * (0.251684631 - 0.003369263 * pow(sin(rectHelpB0), 2) + 0.00001127 * pow(sin(rectHelpB0), 4)
+            - pow(rectHelpZ, 2) * (0.10500614 - 0.04559916 * pow(sin(rectHelpB0), 2) + 0.00228901 * pow(sin(rectHelpB0), 4) - 0.00002987 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.042858 - 0.025318 * pow(sin(rectHelpB0), 2) + 0.014346 * pow(sin(rectHelpB0), 4) - 0.001264 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.01672 - 0.00630 * pow(sin(rectHelpB0), 2) + 0.01188 * pow(sin(rectHelpB0), 4) - 0.00328 * pow(sin(rectHelpB0), 6)))));
     //вспомогательная величина
-    rectDistL = rect_help_z * (1 - 0.0033467108 * pow(sin(rectHelpB0), 2) - 0.0000056002 * pow(sin(rectHelpB0), 4) - 0.0000000187 * pow(sin(rectHelpB0), 6)
-                               - pow(rect_help_z, 2) * (0.16778975 + 0.16273586 * pow(sin(rectHelpB0), 2) - 0.00052490 * pow(sin(rectHelpB0), 4) - 0.00000846 * pow(sin(rectHelpB0), 6)
-                                                        - pow(rect_help_z, 2) * (0.0420025 + 0.1487407 * pow(sin(rectHelpB0), 2) + 0.0059420 * pow(sin(rectHelpB0), 4) - 0.0000150 * pow(sin(rectHelpB0), 6)
-                                                                                 - pow(rect_help_z, 2) * (0.01225 + 0.09477 * pow(sin(rectHelpB0), 2) + 0.03282 * pow(sin(rectHelpB0), 4) - 0.00034 * pow(sin(rectHelpB0), 6)
-                                                                                                          - pow(rect_help_z, 2) * (0.0038 + 0.0524 * pow(sin(rectHelpB0), 2) + 0.0482 * pow(sin(rectHelpB0), 4) - 0.0032 * pow(sin(rectHelpB0), 6))))));
-    rect_answ_B = rectDeltaB + rectHelpB0; //геодезическая широта
-    rect_answ_L = 6 * (static_cast<double>(rectZoneN) - 0.5) / 57.29577951 + rectDistL; //геодезическая долгота
+    rectDistL = rectHelpZ * (1 - 0.0033467108 * pow(sin(rectHelpB0), 2) - 0.0000056002 * pow(sin(rectHelpB0), 4) - 0.0000000187 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.16778975 + 0.16273586 * pow(sin(rectHelpB0), 2) - 0.00052490 * pow(sin(rectHelpB0), 4) - 0.00000846 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.0420025 + 0.1487407 * pow(sin(rectHelpB0), 2) + 0.0059420 * pow(sin(rectHelpB0), 4) - 0.0000150 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.01225 + 0.09477 * pow(sin(rectHelpB0), 2) + 0.03282 * pow(sin(rectHelpB0), 4) - 0.00034 * pow(sin(rectHelpB0), 6)
+            - pow(rectHelpZ, 2) * (0.0038 + 0.0524 * pow(sin(rectHelpB0), 2) + 0.0482 * pow(sin(rectHelpB0), 4) - 0.0032 * pow(sin(rectHelpB0), 6))))));
+    rectAnswB = rectDeltaB + rectHelpB0; //геодезическая широта
+    rectAnswL = 6 * (static_cast<double>(rectZoneN) - 0.5) / 57.29577951 + rectDistL; //геодезическая долгота
 
-    setGeodeticCoordinates(rect_answ_B, rect_answ_L);
+    setGeodeticCoordinates(rectAnswB, rectAnswL);
 }

@@ -5,7 +5,8 @@
 int main() {
     auto * test_object = new CoordinatesPZ90;
     std::cout << M_PI << std::endl;
-    test_object->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180);
+    //test_object->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180);
+    test_object->setGeodeticCoordinates(1 , 0);
     std::cout << "(" << test_object->getGeodeticLatitudeB() << ", " << test_object->getGeodeticLongitudeL() << ")" << std::endl;
     test_object->geodeticToRectangular();
     std::cout << "(" << test_object->getRectangularX() << ", " << test_object->getRectangularY() << ")" << std::endl;
