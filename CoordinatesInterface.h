@@ -5,7 +5,6 @@
 #ifndef COORDINATESEX_COORDINATESINTERFACE_H
 #define COORDINATESEX_COORDINATESINTERFACE_H
 
-#include <vector>
 #include <cmath>
 #include <iostream>
 
@@ -21,13 +20,10 @@ protected:
     virtual void setRectangularCoordinates(double, double) = 0; //сеттер для прямоугольных координат
 
     virtual void checkGeodeticNum(double, double) = 0;
+    virtual void checkRectangularNum(double, double) = 0;
 
     virtual void geodeticToRectangular() = 0; //преобразование географических в плоские
     virtual void rectangularToGeodetic() = 0; //преобразование плоских в графические
-//    std::vector <double> array_pz90_latitude; //вектор с координатами широты пз90
-//    std::vector <double> array_pz90_longitude; //вектор с координатами долготы пз90
-//    std::vector <double> array_sk42_X; //вектор с х абсциссами ск42
-//    std::vector <double> array_sk42_Y; //вектор с y орднатами ск42
 
 };
 

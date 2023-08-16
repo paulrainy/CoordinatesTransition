@@ -9,17 +9,17 @@
 #include "CoordinatesSK42.h"
 #include "CoordinatesInterface.h"
 
+#include <vector>
+
 class CoordinatesFacade {
 private:
-    CoordinatesPZ90 * objectPZ90 = new CoordinatesPZ90;
-    CoordinatesSK42 * objectSK42 = new CoordinatesSK42;
-    //мб как-то по-другому??
+    std::vector<CoordinatesPZ90> * vectorGeodeticPZ90 = new std::vector<CoordinatesPZ90>;
+    std::vector<CoordinatesPZ90> * vectorRectangularPZ90 = new std::vector<CoordinatesPZ90>;
 
 public:
+    void objectCreatorPZ90();
 
-    void fabricPZ90();
-    void fabricSK42();
-    //вообще идеи не шли
+    void objectCreatorSK42();
 
 };
 

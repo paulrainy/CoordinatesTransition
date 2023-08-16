@@ -23,7 +23,7 @@ double CoordinatesPZ90::getRectangularY() {
 void CoordinatesPZ90::checkGeodeticNum(double testNum1, double testNum2) {
     try {
         if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)) throw std::string{"wrong latitude!"};
-        if (testNum2 < (-180) || testNum2 > 180) throw std::string{"wrong longitude!"};
+        if (testNum2 < (-1 * 180) || testNum2 > 180) throw std::string{"wrong longitude!"};
     }
     catch (std::string errorMessage){
         std::cout << "wrong latitude or longitude!" << std::endl;
@@ -36,6 +36,10 @@ void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double input
     //latitudeB = latitudeB * (PI / 180.0);
     this->geodeticLatitudeB = inputLatitudeB;
     this->geodeticLongitudeL = inputLongitudeL;
+}
+
+void CoordinatesPZ90::checkRectangularNum(double, double) {
+    //надо разобраться с ограничениями и здесь
 }
 
 void CoordinatesPZ90::setRectangularCoordinates(double rectangular_X, double rectangular_Y) {
@@ -95,3 +99,5 @@ void CoordinatesPZ90::rectangularToGeodetic() {
 
     setGeodeticCoordinates(rectAnswB, rectAnswL);
 }
+
+

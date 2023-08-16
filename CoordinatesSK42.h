@@ -9,6 +9,9 @@
 
 class CoordinatesSK42 : protected CoordinatesInterface {
 private:
+    //ск42 подразумевает только плоские прямоугольные координаты
+    //необходимо попмимо пдф о ск42 найти немного информации о пз90, так сказать базу)))))
+
     const double SEMI_MAJOR_AXIS_CONST = 6378245;
     //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.3;
@@ -22,17 +25,19 @@ private:
     double rectangular_Y{}; // ось Y пз90
 
     void checkGeodeticNum(double, double) override;
+    void checkRectangularNum(double, double) override;
+
 public:
-    double getGeodeticLatitudeB() override;
-    double getGeodeticLongitudeL() override;
+    double getGeodeticLatitudeB() override; //не актуально
+    double getGeodeticLongitudeL() override; //не актуально
     double getRectangularX() override;
     double getRectangularY() override;
 
-    void setGeodeticCoordinates(double, double) override;
+    void setGeodeticCoordinates(double, double) override; //не актуально
     void setRectangularCoordinates(double, double) override;
 
-    void geodeticToRectangular() override;
-    void rectangularToGeodetic() override;
+    void geodeticToRectangular() override; //не актуально
+    void rectangularToGeodetic() override; //не актуально
 };
 
 

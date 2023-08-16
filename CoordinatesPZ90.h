@@ -44,8 +44,6 @@ private:
     const double COMPRESSION_CONST = 1.0 / 298.25784;
     //Сжатие общеземного эллипсоида
 
-    //const double PI = 3.1415926535;
-
     double geodeticLatitudeB{};//геодезическая широта пз90 (B)
     double geodeticLongitudeL{}; //геодезическая долгота пз90 (L)
     double rectangularX{}; // ось X пз90
@@ -59,6 +57,7 @@ private:
     double powHelpL2() const; //метод, сокращающий подсчёты степени числа l
 
     void checkGeodeticNum(double, double) override;
+    void checkRectangularNum(double, double) override;
 
 public:
     double getGeodeticLatitudeB() override;
