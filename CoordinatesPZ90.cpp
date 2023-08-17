@@ -38,7 +38,7 @@ void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double input
     this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
 }
 
-void CoordinatesPZ90::checkRectangularNum(double, double) {
+void CoordinatesPZ90::checkRectangularNum(double testNum1, double testNum2) {
     //надо разобраться с ограничениями и здесь
 }
 

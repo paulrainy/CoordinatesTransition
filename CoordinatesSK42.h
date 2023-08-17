@@ -19,7 +19,7 @@ private:
     double rectangular_X{}; // ось X
     double rectangular_Y{}; // ось Y
 
-    void checkGeodeticNum(double, double) override;
+    void checkGeodeticNum(double, double) override; //не актуально
     void checkRectangularNum(double, double) override;
 
 public:

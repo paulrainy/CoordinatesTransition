@@ -10,16 +10,21 @@
 #include "CoordinatesInterface.h"
 
 #include <vector>
+#include <iostream>
 
 class CoordinatesFacade {
 private:
     std::vector<CoordinatesPZ90> * vectorGeodeticPZ90 = new std::vector<CoordinatesPZ90>;
     std::vector<CoordinatesPZ90> * vectorRectangularPZ90 = new std::vector<CoordinatesPZ90>;
+    std::vector<CoordinatesSK42> * vectorSK42 = new std::vector<CoordinatesSK42>;
 
 public:
-    void objectCreatorPZ90();
+    void objectCreatorGeodeticPZ90(double, double);
+    void objectCreatorRectangularPZ90(double, double);
+    void objectCreatorSK42(double, double);
 
-    void objectCreatorSK42();
+    void vectorGeodeticToRectangular();
+    void vectorRectangularToGeodetic();
 
 };
 
