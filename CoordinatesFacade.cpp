@@ -3,3 +3,11 @@
 //
 
 #include "CoordinatesFacade.h"
+
+void CoordinatesFacade::objectCreatorPZ90() {
+
+}
+
+void CoordinatesFacade::objectCreatorSK42() {
+
+}

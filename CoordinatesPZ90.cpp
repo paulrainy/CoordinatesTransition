@@ -35,7 +35,7 @@ void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double input
     checkGeodeticNum(inputLatitudeB, inputLongitudeL);
     //latitudeB = latitudeB * (PI / 180.0);
     this->geodeticLatitudeB = inputLatitudeB;
-    this->geodeticLongitudeL = inputLongitudeL;
+    this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
 }
 
 void CoordinatesPZ90::checkRectangularNum(double, double) {
@@ -77,9 +77,9 @@ void CoordinatesPZ90::geodeticToRectangular() {
 }
 
 void CoordinatesPZ90::rectangularToGeodetic() {
-    rectHelpBeta = getRectangularX() / 6367558.4968; //вспомогательное величинв бета
-    rectZoneN = static_cast<int>(getRectangularY() * pow(10, -6)); //номер шестиградусной зоны (n)
-    rectHelpB0 = rectHelpBeta + sin(2 * rectHelpBeta) * (0.00252588685 - 0.00001491860
+    rectHelpBeta = getRectangularX() / 6367558.4968; //вспомогательное величина бета
+    rectZoneN = static_cast<int>(getRectangularY() / 1000000.0); //номер шестиградусной зоны (n)
+    rectHelpB0 = rectHelpBeta + sin(2 * rectHelpBeta) * (0.00252588685 - 0.0000149186
             * pow((sin(rectHelpBeta)), 2) + 0.00000011904 * pow((sin(rectHelpBeta)), 4));
     //геодезическая широта точки, абсцисса которой равна х, а ордината равна 0
     rectHelpZ = (getRectangularY() - (10 * rectZoneN + 5) * pow(10, 5)) / (6378245 * cos(rectHelpB0));
