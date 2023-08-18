@@ -26,6 +26,9 @@ public:
     void vectorGeodeticToRectangular();
     void vectorRectangularToGeodetic();
 
+    //мб сделать дополнительные методы для создания объектов???
+
+
 };
 
 

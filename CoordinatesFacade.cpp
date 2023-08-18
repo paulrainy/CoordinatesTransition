@@ -23,12 +23,15 @@ void CoordinatesFacade::objectCreatorSK42(double inputRectangularX, double input
 }
 
 void CoordinatesFacade::vectorGeodeticToRectangular() {
-    for (int i = 0; i < vectorGeodeticPZ90->size(); i++){
-        vectorGeodeticPZ90->at(i).geodeticToRectangular();
-        vectorRectangularPZ90->push_back(vectorGeodeticPZ90->at(i));
+    for (auto & i : *vectorGeodeticPZ90){
+        i.geodeticToRectangular();
+        vectorRectangularPZ90->push_back(i);
     }
 }
 
 void CoordinatesFacade::vectorRectangularToGeodetic() {
-
+    for (auto & i : *vectorRectangularPZ90){
+        i.rectangularToGeodetic();
+        vectorGeodeticPZ90->push_back(i);
+    }
 }
