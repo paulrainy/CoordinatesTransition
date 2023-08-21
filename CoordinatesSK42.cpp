@@ -31,7 +31,8 @@ void CoordinatesSK42::setGeodeticCoordinates(double, double) {
 }
 
 void CoordinatesSK42::setRectangularCoordinates(double inputRectX, double inputRectY) {
-
+    this->rectangular_X = inputRectX;
+    this->rectangular_Y = inputRectY;
 }
 
 void CoordinatesSK42::geodeticToRectangular() {
@@ -42,6 +43,20 @@ void CoordinatesSK42::rectangularToGeodetic() {
     //неактуально для ск42
 }
 
-void CoordinatesSK42::checkRectangularNum(double, double) {
-
+void CoordinatesSK42::checkRectangularNum(double testNum1, double testNum2) {
+    try {
+        std::string errorMessage;
+        if (testNum1 > 10002137 || testNum1 < -10002137) {
+            errorMessage = "wrong X!";
+            throw errorMessage;
+        }
+        if (testNum2 > 20037500 || testNum2 < -20037500){
+            errorMessage = "wrong Y!";
+            throw errorMessage;
+        }
+    }
+    catch (std::string errorMessage) {
+        std::cout << errorMessage << std::endl;
+        delete [] this;
+    }
 }

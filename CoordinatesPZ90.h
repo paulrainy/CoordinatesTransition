@@ -52,6 +52,7 @@ private:
     double geoB{}, geoL{}, geoDistL{}, geoAnswX{}, geoAnswY{};
     int geoZoneN{}, rectZoneN{};
     double rectDeltaB{}, rectDistL{}, rectHelpBeta{}, rectHelpB0{}, rectHelpZ{}, rectAnswB{}, rectAnswL{};
+    //вспомогательные переменные для формул перевода
 
     double sinHelpB(int); //метод, сокращающий подсчёты синусов широты и долготы в соответствующих формулах перевода
     double powHelpL2() const; //метод, сокращающий подсчёты степени числа l

@@ -22,11 +22,18 @@ double CoordinatesPZ90::getRectangularY() {
 
 void CoordinatesPZ90::checkGeodeticNum(double testNum1, double testNum2) {
     try {
-        if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)) throw std::string{"wrong latitude!"};
-        if (testNum2 < (-1 * 180) || testNum2 > 180) throw std::string{"wrong longitude!"};
+        std::string errorMessage;
+        if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)){
+            errorMessage = "wrong latitude!";
+            throw errorMessage;
+        }
+        if (testNum2 < (-1 * 180) || testNum2 > 180){
+            errorMessage = "wrong longitude!";
+            throw errorMessage;
+        }
     }
     catch (std::string errorMessage){
-        std::cout << "wrong latitude or longitude!" << std::endl;
+        std::cout << errorMessage << std::endl;
         delete[] this;
     }
 }

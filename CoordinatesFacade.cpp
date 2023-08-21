@@ -27,6 +27,10 @@ void CoordinatesFacade::vectorGeodeticToRectangular() {
         i.geodeticToRectangular();
         vectorRectangularPZ90->push_back(i);
     }
+//    for (int i = 0; i < vectorGeodeticPZ90->size(); i++){
+//        vectorGeodeticPZ90->at(i).geodeticToRectangular();
+//        vectorRectangularPZ90->push_back(vectorGeodeticPZ90->at(i));
+//    }
 }
 
 void CoordinatesFacade::vectorRectangularToGeodetic() {
@@ -35,3 +39,63 @@ void CoordinatesFacade::vectorRectangularToGeodetic() {
         vectorGeodeticPZ90->push_back(i);
     }
 }
+
+CoordinatesPZ90 CoordinatesFacade::getMemberVectorGeodeticPZ90(int member) {
+    try{
+        std::string errorMessage;
+        if (member < 0 || member > vectorGeodeticPZ90->size()){
+            errorMessage = "wrong num of member in vector";
+            throw errorMessage;
+        }
+        else {
+            return vectorGeodeticPZ90->at(member);
+        }
+    }
+    catch (std::string errorMessage){
+//        CoordinatesPZ90 * nullObject = nullptr;
+//        return *nullObject;
+        std::cout << errorMessage << std::endl;
+        delete [] this;
+    }
+
+}
+
+CoordinatesPZ90 CoordinatesFacade::getMemberVectorRectangularPZ90(int member) {
+    try {
+        std::string errorMessage;
+        if (member < 0 || member > vectorRectangularPZ90->size()){
+            errorMessage = "wrong num of member in vector";
+            throw errorMessage;
+        }
+        else {
+            return vectorRectangularPZ90->at(member);
+        }
+    }
+    catch (std::string errorMessage){
+        std::cout << errorMessage << std::endl;
+        delete [] this;
+    }
+}
+
+CoordinatesSK42 CoordinatesFacade::getMemberVectorSK42(int member) {
+    try {
+        std::string errorMessage;
+        if (member < 0 || member > vectorSK42->size()){
+            errorMessage = "wrong num of member in vector";
+            throw errorMessage;
+        }
+        else {
+            return vectorSK42->at(member);
+        }
+    }
+    catch (std::string errorMessage){
+//        CoordinatesSK42 * nullObject = nullptr;
+//        return *nullObject;
+        std::cout << errorMessage << std::endl;
+        delete [] this;
+    }
+
+}
+
+
+

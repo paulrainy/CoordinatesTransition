@@ -19,8 +19,8 @@ protected:
     virtual void setGeodeticCoordinates(double, double) = 0; //сеттер для геодезических координат
     virtual void setRectangularCoordinates(double, double) = 0; //сеттер для прямоугольных координат
 
-    virtual void checkGeodeticNum(double, double) = 0;
-    virtual void checkRectangularNum(double, double) = 0;
+    virtual void checkGeodeticNum(double, double) = 0; //проверяющий поступающих значений геодезических координат
+    virtual void checkRectangularNum(double, double) = 0; //проверка поступающих значений прямоугольных координат
 
     virtual void geodeticToRectangular() = 0; //преобразование географических в плоские
     virtual void rectangularToGeodetic() = 0; //преобразование плоских в графические
