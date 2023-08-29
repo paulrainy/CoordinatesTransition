@@ -113,18 +113,32 @@ void CoordinatesPZ90::rectangularToGeodetic() {
     setGeodeticCoordinates(rectAnswB, rectAnswL);
 }
 
-void CoordinatesPZ90::getMemberFromGeodeticVector(int) {
-
+void CoordinatesPZ90::getMemberFromGeodeticVector(int vectorMember) {
+    if (vectorGeodeticLatitudePZ90->empty() || vectorGeodeticLongitudePZ90->empty()){
+        std::cout << "vector is empty!" << std::endl;
+    }
+    else{
+        setGeodeticCoordinates(vectorGeodeticLatitudePZ90->at(vectorMember),
+                               vectorGeodeticLongitudePZ90->at(vectorMember));
+    }
 }
 
-void CoordinatesPZ90::getMemberFromRectangularVector(int) {
-
+void CoordinatesPZ90::getMemberFromRectangularVector(int vectorMember) {
+    if (vectorRectangularXPZ90->empty() || vectorRectangularYPZ90->empty()){
+        std::cout << "vector is empty!" << std::endl;
+    }
+    else{
+        setRectangularCoordinates(vectorRectangularXPZ90->at(vectorMember),
+                                  vectorRectangularYPZ90->at(vectorMember));
+    }
 }
 
 void CoordinatesPZ90::loadGeodeticToVector() {
-
+    vectorGeodeticLatitudePZ90->push_back(getGeodeticLatitudeB());
+    vectorGeodeticLongitudePZ90->push_back(getGeodeticLongitudeL());
 }
 
 void CoordinatesPZ90::loadRectangularToVector() {
-
+    vectorRectangularXPZ90->push_back(getRectangularX());
+    vectorRectangularYPZ90->push_back(getRectangularY());
 }

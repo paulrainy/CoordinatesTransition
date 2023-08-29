@@ -27,19 +27,22 @@ private:
     void getMemberFromGeodeticVector(int) override;
     void getMemberFromRectangularVector(int) override;
 
-public:
     double getGeodeticLatitudeB() override; //не актуально
     double getGeodeticLongitudeL() override; //не актуально
-    double getRectangularX() override;
-    double getRectangularY() override;
 
     void setGeodeticCoordinates(double, double) override; //не актуально
-    void setRectangularCoordinates(double, double) override;
 
     void geodeticToRectangular() override; //не актуально
     void rectangularToGeodetic() override; //не актуально
 
-    void loadGeodeticToVector() override;
+    void loadGeodeticToVector() override; //не актуально
+
+public:
+    double getRectangularX() override;
+    double getRectangularY() override;
+
+    void setRectangularCoordinates(double, double) override;
+
     void loadRectangularToVector() override;
 };
 

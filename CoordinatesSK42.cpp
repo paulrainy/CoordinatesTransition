@@ -55,17 +55,24 @@ void CoordinatesSK42::rectangularToGeodetic() {
 }
 
 void CoordinatesSK42::getMemberFromGeodeticVector(int) {
-
+    //неактуально для ск42
 }
 
-void CoordinatesSK42::getMemberFromRectangularVector(int) {
-
+void CoordinatesSK42::getMemberFromRectangularVector(int vectorMember) {
+    if (vectorRectangularXSK42->empty() || vectorRectangularYSK42->empty()){
+        std::cout << "vector is empty!" << std::endl;
+    }
+    else{
+        setRectangularCoordinates(vectorRectangularXSK42->at(vectorMember),
+                                  vectorRectangularYSK42->at(vectorMember));
+    }
 }
 
 void CoordinatesSK42::loadGeodeticToVector() {
-
+    //неактуально для ск42
 }
 
 void CoordinatesSK42::loadRectangularToVector() {
-
+    vectorRectangularXSK42->push_back(getRectangularX());
+    vectorRectangularYSK42->push_back(getRectangularY());
 }
