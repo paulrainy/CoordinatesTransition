@@ -1,6 +1,5 @@
-#include <iostream>
 
-#include "CoordinatesFacade.h"
+#include "CoordinatesPZ90.h"
 
 int main() {
     auto * test_object = new CoordinatesPZ90;
@@ -25,7 +24,7 @@ int main() {
     test_object2->geodeticToRectangular();
     std::cout << "Rectangular in m: "<< "(" << test_object2->getRectangularX() << ", " << test_object2->getRectangularY() << ")" << std::endl;
     std::cout << "Rectangular in km: "<< "(" << test_object2->getRectangularX() / 1000 << ", " << test_object2->getRectangularY() / 1000 << ")" << std::endl;
-//    test_object->set_sk42(1000000, 1000000);
+////    test_object->set_sk42(1000000, 1000000);
 ////    std::cout << test_object->get_pz90_latitude() << std::endl;
 ////    std::cout << test_object->get_pz90_longitude() << std::endl;
 ////    test_object->pz90_to_sk42();

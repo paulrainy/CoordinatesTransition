@@ -54,11 +54,20 @@ private:
     double rectDeltaB{}, rectDistL{}, rectHelpBeta{}, rectHelpB0{}, rectHelpZ{}, rectAnswB{}, rectAnswL{};
     //вспомогательные переменные для формул перевода
 
+    std::vector<double> * vectorGeodeticLatitudePZ90 = new std::vector<double>;
+    //вектор, содержащий набор геодезических широт пз90
+    std::vector<double> * vectorGeodeticLongitudePZ90 = new std::vector<double>;
+    //вектор, содержащий набор геодезических долгот пз90
+    std::vector<double> * vectorRectangularXPZ90 = new std::vector<double>;
+    //вектор, содержащий набор плоских прямоугольных координат X пз90
+    std::vector<double> * vectorRectangularYPZ90 = new std::vector<double>;
+    //вектор, содержащий набор плоских прямоугольных координат Y пз90
+
     double sinHelpB(int); //метод, сокращающий подсчёты синусов широты и долготы в соответствующих формулах перевода
     double powHelpL2() const; //метод, сокращающий подсчёты степени числа l
 
-    void checkGeodeticNum(double, double) override;
-    void checkRectangularNum(double, double) override;
+    void getMemberFromGeodeticVector(int) override;
+    void getMemberFromRectangularVector(int) override;
 
 public:
     double getGeodeticLatitudeB() override;
@@ -71,6 +80,9 @@ public:
 
     void geodeticToRectangular() override;
     void rectangularToGeodetic() override;
+
+    void loadGeodeticToVector() override;
+    void loadRectangularToVector() override;
 
 };
 

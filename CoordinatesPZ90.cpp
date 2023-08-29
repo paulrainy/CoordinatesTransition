@@ -20,38 +20,44 @@ double CoordinatesPZ90::getRectangularY() {
     return rectangularY;
 }
 
-void CoordinatesPZ90::checkGeodeticNum(double testNum1, double testNum2) {
-    try {
-        std::string errorMessage;
-        if (testNum1 < (-1.0 * M_PI / 2.0) || testNum1 > (M_PI / 2.0)){
-            errorMessage = "wrong latitude!";
-            throw errorMessage;
-        }
-        if (testNum2 < (-1 * 180) || testNum2 > 180){
-            errorMessage = "wrong longitude!";
-            throw errorMessage;
-        }
-    }
-    catch (std::string errorMessage){
-        std::cout << errorMessage << std::endl;
-        delete[] this;
-    }
-}
-
 void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double inputLongitudeL) {
-    checkGeodeticNum(inputLatitudeB, inputLongitudeL);
-    //latitudeB = latitudeB * (PI / 180.0);
+    while(true) {
+        if (inputLatitudeB < (-1.0 * M_PI / 2.0) || inputLatitudeB > (M_PI / 2.0)){
+            std::cout << "wrong latitude!" << std::endl;
+            std::cout << "input a new num in radians:" << std::endl;
+            std::cin >> inputLatitudeB;
+        }
+        else if (inputLongitudeL < ( -1 * M_PI) || inputLongitudeL > M_PI){
+            std::cout << "wrong longitude!" << std::endl;
+            std::cout << "input a new num in radians:" << std::endl;
+            std::cin >> inputLongitudeL;
+        }
+        else {
+            break;
+        }
+    }
     this->geodeticLatitudeB = inputLatitudeB;
     this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
 }
 
-void CoordinatesPZ90::checkRectangularNum(double testNum1, double testNum2) {
-    //надо разобраться с ограничениями и здесь
-}
-
-void CoordinatesPZ90::setRectangularCoordinates(double rectangular_X, double rectangular_Y) {
-    this->rectangularX = rectangular_X;
-    this->rectangularY = rectangular_Y;
+void CoordinatesPZ90::setRectangularCoordinates(double inputRectangularX, double inputRectangularY) {
+    while(true){
+        if (inputRectangularX > 10002137 || inputRectangularX < -10002137) {
+            std::cout << "wrong X!" << std::endl;
+            std::cout << "input a new num in m:" << std::endl;
+            std::cin >> inputRectangularX;
+        }
+        else if (inputRectangularY > 20037500 || inputRectangularY < -20037500){
+            std::cout << "wrong Y!" << std::endl;
+            std::cout << "input a new num in m:" << std::endl;
+            std::cin >> inputRectangularY;
+        }
+        else{
+            break;
+        }
+    }
+    this->rectangularX = inputRectangularX;
+    this->rectangularY = inputRectangularY;
 }
 
 double CoordinatesPZ90::sinHelpB(int steps) {
@@ -72,13 +78,13 @@ void CoordinatesPZ90::geodeticToRectangular() {
             + powHelpL2() * (672483.4 - 811219.9 * sinHelpB(2) + 5420.0 * sinHelpB(4) - 10.6 * sinHelpB(6)
             + powHelpL2() * (278194.0 - 830174.0 * sinHelpB(2) + 572434.0 * sinHelpB(4) - 16010.0 * sinHelpB(6)
             + powHelpL2() * (109500.0 - 574700.0 * sinHelpB(2) + 863700.0 * sinHelpB(4) - 398600.0 * sinHelpB(6))))));
-            //формуля для нахождения X абсциссы прямоугольных координат
+    //формуля для нахождения X абсциссы прямоугольных координат
     geoAnswY = (5.0 + 10.0 * geoZoneN) * pow(10, 5) + geoDistL * cos(geoB) * (6378245.0 + 21346.1415 * sinHelpB(2) + 107.1590 *
             sinHelpB(4) + 0.5977 * sinHelpB(6) + pow (geoDistL, 2) * (1070204.16 - 2136826.66 * sinHelpB(2) + 17.98 *
             sinHelpB(4) - 11.99 * sinHelpB(6) + pow (geoDistL, 2) * (270806.0 - 1523417.0 * sinHelpB(2) + 1327645.0 *
             sinHelpB(4) - 21701.0 * sinHelpB(6) + pow (geoDistL, 2) * (79690.0 - 866190.0 * sinHelpB(2) + 1730360.0 *
             sinHelpB(4) - 945460.0 * sinHelpB(6)))));
-            //формула для нахождения Y ординаты прямоугольных координат
+    //формула для нахождения Y ординаты прямоугольных координат
 
     setRectangularCoordinates(geoAnswX, geoAnswY);
 }
@@ -107,4 +113,18 @@ void CoordinatesPZ90::rectangularToGeodetic() {
     setGeodeticCoordinates(rectAnswB, rectAnswL);
 }
 
+void CoordinatesPZ90::getMemberFromGeodeticVector(int) {
 
+}
+
+void CoordinatesPZ90::getMemberFromRectangularVector(int) {
+
+}
+
+void CoordinatesPZ90::loadGeodeticToVector() {
+
+}
+
+void CoordinatesPZ90::loadRectangularToVector() {
+
+}

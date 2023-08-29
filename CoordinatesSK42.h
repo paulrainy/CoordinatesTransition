@@ -9,7 +9,7 @@
 
 class CoordinatesSK42 : protected CoordinatesInterface {
 private:
-    //ск42 подразумевает использование только плоские прямоугольные координаты
+    //ск42 подразумевает использование только плоских прямоугольных координат
 
     const double SEMI_MAJOR_AXIS_CONST = 6378245;
     //Большая полуось
@@ -19,8 +19,13 @@ private:
     double rectangular_X{}; // ось X
     double rectangular_Y{}; // ось Y
 
-    void checkGeodeticNum(double, double) override; //не актуально
-    void checkRectangularNum(double, double) override;
+    std::vector<double> * vectorRectangularXSK42 = new std::vector<double>;
+    //вектор, содержащий набор плоских прямоугольных координат X ск42
+    std::vector<double> * vectorRectangularYSK42 = new std::vector<double>;
+    //вектор, содержащий набор плоских прямоугольных координат Y ск42
+
+    void getMemberFromGeodeticVector(int) override;
+    void getMemberFromRectangularVector(int) override;
 
 public:
     double getGeodeticLatitudeB() override; //не актуально
@@ -33,6 +38,9 @@ public:
 
     void geodeticToRectangular() override; //не актуально
     void rectangularToGeodetic() override; //не актуально
+
+    void loadGeodeticToVector() override;
+    void loadRectangularToVector() override;
 };
 
 
