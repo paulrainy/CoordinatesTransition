@@ -142,3 +142,11 @@ void CoordinatesPZ90::loadRectangularToVector() {
     vectorRectangularXPZ90->push_back(getRectangularX());
     vectorRectangularYPZ90->push_back(getRectangularY());
 }
+
+void CoordinatesPZ90::fromGeodeticToRectangularVector() {
+
+}
+
+void CoordinatesPZ90::fromRectangularToGeodeticVector() {
+
+}

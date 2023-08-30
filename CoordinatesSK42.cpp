@@ -76,3 +76,11 @@ void CoordinatesSK42::loadRectangularToVector() {
     vectorRectangularXSK42->push_back(getRectangularX());
     vectorRectangularYSK42->push_back(getRectangularY());
 }
+
+void CoordinatesSK42::fromGeodeticToRectangularVector() {
+
+}
+
+void CoordinatesSK42::fromRectangularToGeodeticVector() {
+
+}

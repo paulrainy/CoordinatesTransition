@@ -84,6 +84,8 @@ public:
     void loadGeodeticToVector() override;
     void loadRectangularToVector() override;
 
+    void fromGeodeticToRectangularVector() override;
+    void fromRectangularToGeodeticVector() override;
 };
 
 #endif //COORDINATESEX_COORDINATESPZ90_H

@@ -37,6 +37,9 @@ private:
 
     void loadGeodeticToVector() override; //не актуально
 
+    void fromGeodeticToRectangularVector() override; //не актуально
+    void fromRectangularToGeodeticVector() override; //не актуально
+
 public:
     double getRectangularX() override;
     double getRectangularY() override;
