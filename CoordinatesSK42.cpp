@@ -78,9 +78,9 @@ void CoordinatesSK42::loadRectangularToVector() {
 }
 
 void CoordinatesSK42::fromGeodeticToRectangularVector() {
-
+    //неактуально для ск42
 }
 
 void CoordinatesSK42::fromRectangularToGeodeticVector() {
-
+    //неактуально для ск42
 }

@@ -144,9 +144,27 @@ void CoordinatesPZ90::loadRectangularToVector() {
 }
 
 void CoordinatesPZ90::fromGeodeticToRectangularVector() {
-
+    if (vectorGeodeticLatitudePZ90->size() == vectorGeodeticLongitudePZ90->size()){
+        for (int i = 0; i < vectorGeodeticLatitudePZ90->size(); i++){
+            getMemberFromGeodeticVector(i);
+            geodeticToRectangular();
+            loadRectangularToVector();
+        }
+    }
+    else {
+        std::cout << "found difference between latitude and longitude vector!" << std::endl;
+    }
 }
 
 void CoordinatesPZ90::fromRectangularToGeodeticVector() {
-
+    if (vectorRectangularXPZ90->size() == vectorRectangularYPZ90->size()){
+        for (int i = 0; i < vectorRectangularXPZ90->size(); i++){
+            getMemberFromRectangularVector(i);
+            rectangularToGeodetic();
+            loadGeodeticToVector();
+        }
+    }
+    else {
+        std::cout << "found difference between latitude and longitude vector!" << std::endl;
+    }
 }
