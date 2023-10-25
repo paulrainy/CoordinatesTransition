@@ -12,9 +12,9 @@
 class CoordinatesInterface {
 protected:
     //здесь находятся универсальные методы!
-    virtual double getGeodeticLatitudeB() = 0; //геттер геодезической широты
-    virtual double getGeodeticLongitudeL() = 0; //геттер геодезической долготы
-    virtual double getRectangularX() = 0; //геттер прямоугольного X
+    virtual double getGeodeticLatitudeB() = 0; //геттер геодезической широты +
+    virtual double getGeodeticLongitudeL() = 0; //геттер геодезической долготы +
+    virtual double getRectangularX() = 0; //геттер прямоугольного X +
     virtual double getRectangularY() = 0; //геттер прямоугольного Y
 
     virtual void setGeodeticCoordinates(double, double) = 0; //сеттер для геодезических координат
