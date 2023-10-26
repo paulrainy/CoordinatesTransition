@@ -52,3 +52,19 @@ TEST(GeodeticToRectangularTransitionTest, EachSideEquivalence){
     //погрешность не соответствует требованию ни в одном из случаев
 }
 
+TEST(sinHelpBTest, Equivalence){
+    testObject->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180);
+    EXPECT_EQ(pow(sin(42 * M_PI / 180), 2), testObject->sinHelpB(2));
+}
+
+TEST(powHelpL2Test, Equivalence){
+    testObject->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180);
+    testObject->geodeticToRectangular();
+    EXPECT_EQ(pow(((testObject->getGeodeticLongitudeL() - (3.0 + 6.0 * (static_cast<int>((6.0 +
+        testObject->getGeodeticLongitudeL()) / 6.0) - 1.0))) / 57.29577951), 2), testObject->powHelpL2());
+}
+
+TEST(loadAndGetFromVectorTest, Equivalence){
+    
+}
+
