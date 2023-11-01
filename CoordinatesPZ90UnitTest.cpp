@@ -64,7 +64,14 @@ TEST(powHelpL2Test, Equivalence){
         testObject->getGeodeticLongitudeL()) / 6.0) - 1.0))) / 57.29577951), 2), testObject->powHelpL2());
 }
 
-TEST(loadAndGetFromVectorTest, Equivalence){
-    
+TEST(loadAndGetFromGeodeticVectorTest, Equivalence){
+    testObject->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180); //создание координаты
+    testObject->loadGeodeticToVector(); //загрузка координаты в вектор
+    //testObject->setGeodeticCoordinates(52 * M_PI / 180, 42 * M_PI / 180);
+    //testObject->loadGeodeticToVector();
+    testObject->getMemberFromGeodeticVector(0);
+    EXPECT_EQ(42 * M_PI / 180, testObject->getGeodeticLatitudeB());
+    EXPECT_EQ(32, testObject->getGeodeticLongitudeL());
+    //продолжить
 }
 

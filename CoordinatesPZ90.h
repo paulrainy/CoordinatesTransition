@@ -74,6 +74,7 @@ private:
     //необходимо для тестирования приватных методов
     FRIEND_TEST(sinHelpBTest, Equivalence);
     FRIEND_TEST(powHelpL2Test, Equivalence);
+    FRIEND_TEST(loadAndGetFromGeodeticVectorTest, Equivalence);
 
 public:
     double getGeodeticLatitudeB() override; //+

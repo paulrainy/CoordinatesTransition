@@ -23,12 +23,12 @@ double CoordinatesPZ90::getRectangularY() {
 void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double inputLongitudeL) {
     while(true) {
         if (inputLatitudeB < (-1.0 * M_PI / 2.0) || inputLatitudeB > (M_PI / 2.0)){
-            std::cout << "wrong latitude!" << std::endl;
+            std::cout << "wrong latitude! " << inputLatitudeB << " is incorrect num!" << std::endl;
             std::cout << "input a new num in radians:" << std::endl;
             std::cin >> inputLatitudeB;
         }
         else if (inputLongitudeL < ( -1 * M_PI) || inputLongitudeL > M_PI){
-            std::cout << "wrong longitude!" << std::endl;
+            std::cout << "wrong longitude! " << inputLongitudeL << " is incorrect num!" << std::endl;
             std::cout << "input a new num in radians:" << std::endl;
             std::cin >> inputLongitudeL;
         }
@@ -119,7 +119,7 @@ void CoordinatesPZ90::getMemberFromGeodeticVector(int vectorMember) {
     }
     else{
         setGeodeticCoordinates(vectorGeodeticLatitudePZ90->at(vectorMember),
-                               vectorGeodeticLongitudePZ90->at(vectorMember));
+                               vectorGeodeticLongitudePZ90->at(vectorMember) * M_PI / 180);
     }
 }
 
