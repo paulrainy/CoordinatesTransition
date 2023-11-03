@@ -67,11 +67,20 @@ TEST(powHelpL2Test, Equivalence){
 TEST(loadAndGetFromGeodeticVectorTest, Equivalence){
     testObject->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180); //создание координаты
     testObject->loadGeodeticToVector(); //загрузка координаты в вектор
-    //testObject->setGeodeticCoordinates(52 * M_PI / 180, 42 * M_PI / 180);
-    //testObject->loadGeodeticToVector();
+    testObject->setGeodeticCoordinates(52 * M_PI / 180, 42 * M_PI / 180);
+    testObject->loadGeodeticToVector();
+
+    testObject->setRectangularCoordinates(100000, 100000);
+    testObject->loadRectangularToVector();
+    testObject->setRectangularCoordinates(2000000, 2000000);
+    testObject->loadRectangularToVector();
+
     testObject->getMemberFromGeodeticVector(0);
     EXPECT_EQ(42 * M_PI / 180, testObject->getGeodeticLatitudeB());
     EXPECT_EQ(32, testObject->getGeodeticLongitudeL());
-    //продолжить
+
+    testObject->getMemberFromGeodeticVector(1);
+    EXPECT_EQ(52 * M_PI / 180, testObject->getGeodeticLatitudeB());
+    EXPECT_EQ(42, testObject->getGeodeticLongitudeL());
 }
 
