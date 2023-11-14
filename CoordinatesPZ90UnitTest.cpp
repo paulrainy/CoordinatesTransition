@@ -69,16 +69,24 @@ TEST(loadAndGetFromVectorTest, Equivalence){
     testObject->setGeodeticCoordinates(52 * M_PI / 180, 42 * M_PI / 180); //вторая координата
     testObject->loadGeodeticToVector(); //загрузка в вектор
 
+    EXPECT_FALSE(testObject->vectorGeodeticLatitudePZ90->empty()); //проверка на наличие элементов в векторе
+    EXPECT_FALSE(testObject->vectorGeodeticLongitudePZ90->empty());
+
     testObject->setRectangularCoordinates(100000, 200000); //создание прямоугольной координаты
     testObject->loadRectangularToVector(); //загрузка в вектор
     testObject->setRectangularCoordinates(3000000, 4000000); //вторая координата
     testObject->loadRectangularToVector(); //загрузка
 
+    EXPECT_FALSE(testObject->vectorRectangularXPZ90->empty());
+    EXPECT_FALSE(testObject->vectorRectangularYPZ90->empty());
+
     testObject->getMemberFromGeodeticVector(0); //возвращаем из вектора первую записанную координату
+
     EXPECT_EQ(42 * M_PI / 180, testObject->getGeodeticLatitudeB()); //проверка на соответствие широты
     EXPECT_EQ(32, testObject->getGeodeticLongitudeL()); //проверка на соответствие долготы
 
     testObject->getMemberFromGeodeticVector(1); //возвращаем из вектора вторую координату
+
     EXPECT_EQ(52 * M_PI / 180, testObject->getGeodeticLatitudeB()); //то же самое как и выше
     EXPECT_EQ(42, testObject->getGeodeticLongitudeL());
 
@@ -89,6 +97,76 @@ TEST(loadAndGetFromVectorTest, Equivalence){
     testObject->getMemberFromRectangularVector(1);
     EXPECT_EQ(3000000, testObject->getRectangularX());
     EXPECT_EQ(4000000, testObject->getRectangularY());
+
+    testObject->vectorGeodeticLatitudePZ90->clear();
+    testObject->vectorGeodeticLongitudePZ90->clear();
+    testObject->vectorRectangularXPZ90->clear();
+    testObject->vectorRectangularYPZ90->clear();
 }
 
+TEST(geodeticToRectangularVectorTransitionTest, EachSideEquivalence){
+    //вспомогательные переменные
+    double latitudeBeforeFirst, latitudeAfterFirst, longitudeBeforeFirst, longitudeAfterFirst;
+    double latitudeBeforeSecond, latitudeAfterSecond, longitudeBeforeSecond, longitudeAfterSecond;
+    double latitudeBeforeThird, latitudeAfterThird, longitudeBeforeThird, longitudeAfterThird;
+    double rectXBeforeFirst, rectXAfterFirst, rectYBeforeFirst, rectYAfterFirst;
+    double rectXBeforeSecond, rectXAfterSecond, rectYBeforeSecond, rectYAfterSecond;
+    double rectXBeforeThird, rectXAfterThird, rectYBeforeThird, rectYAfterThird;
+
+    testObject->setGeodeticCoordinates(42 * M_PI / 180, 32 * M_PI / 180); //создание геодезической координаты
+    latitudeBeforeFirst = testObject->getGeodeticLatitudeB(); //запись во вспомогательную переменную
+    std::cout << latitudeBeforeFirst << std::endl;
+    longitudeBeforeFirst = testObject->getGeodeticLongitudeL();
+    std::cout << longitudeBeforeFirst << std::endl;
+    testObject->loadGeodeticToVector(); //загрузка координаты в вектор
+
+    testObject->setGeodeticCoordinates(52 * M_PI / 180, 42 * M_PI / 180); //вторая координата
+    latitudeBeforeSecond = testObject->getGeodeticLatitudeB();
+    std::cout << latitudeBeforeSecond << std::endl;
+    longitudeBeforeSecond = testObject->getGeodeticLongitudeL();
+    std::cout << longitudeBeforeSecond << std::endl;
+    testObject->loadGeodeticToVector();
+
+    testObject->setGeodeticCoordinates(62 * M_PI / 180, 52 * M_PI / 180); //третья координата
+    latitudeBeforeThird = testObject->getGeodeticLatitudeB();
+    std::cout << latitudeBeforeThird << std::endl;
+    longitudeBeforeThird = testObject->getGeodeticLongitudeL();
+    std::cout << longitudeBeforeThird << std:: endl;
+    testObject->loadGeodeticToVector();
+
+    EXPECT_FALSE(testObject->vectorGeodeticLatitudePZ90->empty());
+
+    testObject->fromGeodeticToRectangularVector(); //перевод группы координат
+
+    EXPECT_EQ(3, testObject->vectorGeodeticLatitudePZ90->size());
+    EXPECT_EQ(3, testObject->vectorGeodeticLongitudePZ90->size());
+    EXPECT_EQ(3, testObject->vectorRectangularXPZ90->size());
+    EXPECT_EQ(3, testObject->vectorRectangularYPZ90->size());
+
+    testObject->vectorGeodeticLatitudePZ90->clear();
+    testObject->vectorGeodeticLongitudePZ90->clear();
+
+    testObject->getMemberFromRectangularVector(0); //получаем первую прямоугольную координату
+    rectXBeforeFirst = testObject->getRectangularX();
+    std::cout << rectXBeforeFirst << std::endl;
+    rectYBeforeFirst = testObject->getRectangularY();
+    std::cout << rectYBeforeFirst << std::endl;
+
+    testObject->getMemberFromRectangularVector(1); //вторая прямоугольная
+    rectXBeforeSecond = testObject->getRectangularX();
+    std::cout << rectXBeforeSecond << std::endl;
+    rectYBeforeSecond = testObject->getRectangularY();
+    std::cout << rectYBeforeSecond << std::endl;
+
+    testObject->getMemberFromRectangularVector(2); //третья
+    rectXBeforeThird = testObject->getRectangularX();
+    std::cout << rectXBeforeThird << std::endl;
+    rectYBeforeThird = testObject->getRectangularY();
+    std::cout << rectYBeforeThird << std::endl;
+
+    testObject->fromRectangularToGeodeticVector();
+
+
+
+}
 

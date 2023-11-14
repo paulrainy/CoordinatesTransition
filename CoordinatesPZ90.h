@@ -75,18 +75,19 @@ private:
     FRIEND_TEST(sinHelpBTest, Equivalence);
     FRIEND_TEST(powHelpL2Test, Equivalence);
     FRIEND_TEST(loadAndGetFromVectorTest, Equivalence);
+    FRIEND_TEST(geodeticToRectangularVectorTransitionTest, EachSideEquivalence);
 
 public:
-    double getGeodeticLatitudeB() override; //+
-    double getGeodeticLongitudeL() override; //+
-    double getRectangularX() override; //+
-    double getRectangularY() override; //+
+    double getGeodeticLatitudeB() override;
+    double getGeodeticLongitudeL() override;
+    double getRectangularX() override;
+    double getRectangularY() override;
 
-    void setGeodeticCoordinates(double, double) override; //+
-    void setRectangularCoordinates(double, double) override; //+
+    void setGeodeticCoordinates(double, double) override;
+    void setRectangularCoordinates(double, double) override;
 
-    void geodeticToRectangular() override; //+
-    void rectangularToGeodetic() override; //+
+    void geodeticToRectangular() override;
+    void rectangularToGeodetic() override;
 
     void loadGeodeticToVector() override;
     void loadRectangularToVector() override;
