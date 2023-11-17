@@ -5,6 +5,8 @@
 #ifndef COORDINATESEX_COORDINATESSK42_H
 #define COORDINATESEX_COORDINATESSK42_H
 
+#include <gtest/gtest.h>
+
 #include "CoordinatesInterface.h"
 
 class CoordinatesSK42 : protected CoordinatesInterface {
@@ -39,6 +41,8 @@ private:
 
     void fromGeodeticToRectangularVector() override; //не актуально
     void fromRectangularToGeodeticVector() override; //не актуально
+
+    FRIEND_TEST(loadAndGetFromRectVectorTest, Equivalence);
 
 public:
     double getRectangularX() override;
