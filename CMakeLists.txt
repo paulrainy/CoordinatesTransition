@@ -11,6 +11,9 @@ add_executable(CoordinatesEx main.cpp CoordinatesInterface.h
         CoordinatesSK42.h
         CoordinatesPZ90UnitTest.cpp
         CoordinatesSK42UnitTest.cpp
+        CoordinatesTranslation.cpp
+        CoordinatesTranslation.h
+        CoordinatesTranslationUnitTest.cpp
 )
 
 target_link_libraries(CoordinatesEx gtest gmock pthread)
