@@ -13,3 +13,8 @@ CoordinatesPZ90 CoordinatesTranslation::SK42toPZ90() {
 
     return coordinateObjectPZ90;
 }
+
+double CoordinatesTranslation::PZ90toWGS84() {
+
+
+}

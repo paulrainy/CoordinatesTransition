@@ -17,6 +17,7 @@ private:
 public:
     CoordinatesSK42 PZ90toSK42();
     CoordinatesPZ90 SK42toPZ90();
+    double PZ90toWGS84();
 };
 
 
