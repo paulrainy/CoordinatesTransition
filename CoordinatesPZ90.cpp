@@ -168,3 +168,7 @@ void CoordinatesPZ90::fromRectangularToGeodeticVector() {
         std::cout << "found difference between latitude and longitude vector!" << std::endl;
     }
 }
+
+CoordinatesPZ90::~CoordinatesPZ90() = default;
+
+CoordinatesPZ90::CoordinatesPZ90() = default;

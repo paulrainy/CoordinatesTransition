@@ -1,3 +1,5 @@
-.idea/
-cmake-build-debug/
-googletest/
+/.idea/
+/cmake-build-debug/
+/googletest/
+/build/
+/.vscode/

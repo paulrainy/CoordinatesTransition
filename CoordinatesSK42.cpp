@@ -4,15 +4,9 @@
 
 #include "CoordinatesSK42.h"
 
-double CoordinatesSK42::getGeodeticLatitudeB() {
-    return 0;
-    //неактуально для ск42
-}
+double __attribute__((unused)) CoordinatesSK42::getGeodeticLatitudeB() {}
 
-double CoordinatesSK42::getGeodeticLongitudeL() {
-    return 0;
-    //неактуально для ск42
-}
+double __attribute__((unused)) CoordinatesSK42::getGeodeticLongitudeL() {}
 
 double CoordinatesSK42::getRectangularX() {
     return rectangular_X;
@@ -22,9 +16,7 @@ double CoordinatesSK42::getRectangularY() {
     return rectangular_Y;
 }
 
-void CoordinatesSK42::setGeodeticCoordinates(double, double) {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::setGeodeticCoordinates(double, double) {}
 
 void CoordinatesSK42::setRectangularCoordinates(double inputRectangularX, double inputRectangularY) {
     while(true){
@@ -46,17 +38,11 @@ void CoordinatesSK42::setRectangularCoordinates(double inputRectangularX, double
     this->rectangular_Y = inputRectangularY;
 }
 
-void CoordinatesSK42::geodeticToRectangular() {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::geodeticToRectangular() {}
 
-void CoordinatesSK42::rectangularToGeodetic() {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::rectangularToGeodetic() {}
 
-void CoordinatesSK42::getMemberFromGeodeticVector(int) {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::getMemberFromGeodeticVector(int) {}
 
 void CoordinatesSK42::getMemberFromRectangularVector(int vectorMember) {
     if (vectorRectangularXSK42->empty() || vectorRectangularYSK42->empty()){
@@ -68,19 +54,17 @@ void CoordinatesSK42::getMemberFromRectangularVector(int vectorMember) {
     }
 }
 
-void CoordinatesSK42::loadGeodeticToVector() {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::loadGeodeticToVector() {}
 
 void CoordinatesSK42::loadRectangularToVector() {
     vectorRectangularXSK42->push_back(getRectangularX());
     vectorRectangularYSK42->push_back(getRectangularY());
 }
 
-void CoordinatesSK42::fromGeodeticToRectangularVector() {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::fromGeodeticToRectangularVector() {}
 
-void CoordinatesSK42::fromRectangularToGeodeticVector() {
-    //неактуально для ск42
-}
+void __attribute__((unused)) CoordinatesSK42::fromRectangularToGeodeticVector() {}
+
+CoordinatesSK42::~CoordinatesSK42() = default;
+
+CoordinatesSK42::CoordinatesSK42() = default;

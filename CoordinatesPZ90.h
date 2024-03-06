@@ -78,6 +78,9 @@ private:
     FRIEND_TEST(geodeticToRectangularVectorTransitionTest, EachSideEquivalence);
 
 public:
+    CoordinatesPZ90();
+    ~CoordinatesPZ90();
+
     double getGeodeticLatitudeB() override;
     double getGeodeticLongitudeL() override;
     double getRectangularX() override;

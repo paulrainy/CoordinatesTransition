@@ -15,9 +15,20 @@ private:
     double coordinateObjectWGS84;
 
 public:
-    CoordinatesSK42 PZ90toSK42();
-    CoordinatesPZ90 SK42toPZ90();
-    double PZ90toWGS84();
+    void setCoordinateObjectPZ90(CoordinatesPZ90);
+    void setCoordinateObjectSK42(CoordinatesSK42);
+    void setCoordinateObjectWGS84(double);
+
+    CoordinatesPZ90 getCoordinateObjectPZ90();
+    CoordinatesSK42 getCoordinateObjectSK42();
+    double getCoordinateObjectWGS84();
+
+    void PZ90toSK42();
+    void WGS84toSK42();
+    void SK42toPZ90();
+    void WGS84toPZ90();
+    void PZ90toWGS84();
+    void SK42toWGS84();
 };
 
 
