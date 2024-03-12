@@ -9,11 +9,11 @@ double __attribute__((unused)) CoordinatesSK42::getGeodeticLatitudeB() {}
 double __attribute__((unused)) CoordinatesSK42::getGeodeticLongitudeL() {}
 
 double CoordinatesSK42::getRectangularX() {
-    return rectangular_X;
+    return rectangularX;
 }
 
 double CoordinatesSK42::getRectangularY() {
-    return rectangular_Y;
+    return rectangularY;
 }
 
 void __attribute__((unused)) CoordinatesSK42::setGeodeticCoordinates(double, double) {}
@@ -34,8 +34,8 @@ void CoordinatesSK42::setRectangularCoordinates(double inputRectangularX, double
             break;
         }
     }
-    this->rectangular_X = inputRectangularX;
-    this->rectangular_Y = inputRectangularY;
+    this->rectangularX = inputRectangularX;
+    this->rectangularY = inputRectangularY;
 }
 
 void __attribute__((unused)) CoordinatesSK42::geodeticToRectangular() {}

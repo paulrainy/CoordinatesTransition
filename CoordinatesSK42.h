@@ -17,8 +17,8 @@ private:
     const double COMPRESSION_CONST = 1.0 / 298.3;
     //Сжатие общеземного эллипсоида
 
-    double rectangular_X{}; // ось X
-    double rectangular_Y{}; // ось Y
+    double rectangularX{}; // ось X
+    double rectangularY{}; // ось Y
 
     std::vector<double> * vectorRectangularXSK42 = new std::vector<double>;
     //вектор, содержащий набор плоских прямоугольных координат X ск42
