@@ -9,23 +9,46 @@ CoordinatesWGS84::CoordinatesWGS84() = default;
 CoordinatesWGS84::~CoordinatesWGS84() = default;
 
 double CoordinatesWGS84::getGeodeticLatitudeB() {
-    return 0;
+    return geodeticLatitudeB;
 }
 
 double CoordinatesWGS84::getGeodeticLongitudeL() {
-    return 0;
+    return geodeticLongitudeL;
 }
 
-void CoordinatesWGS84::setGeodeticCoordinates(double, double) {
-
+void CoordinatesWGS84::setGeodeticCoordinates(double inputLatitudeB, double inputLongitudeL) {
+    while(true) {
+        if (inputLatitudeB < (-1.0 * M_PI / 2.0) || inputLatitudeB > (M_PI / 2.0)){
+            std::cout << "wrong latitude! " << inputLatitudeB << " is incorrect num!" << std::endl;
+            std::cout << "input a new num in radians:" << std::endl;
+            std::cin >> inputLatitudeB;
+        }
+        else if (inputLongitudeL < ( -1 * M_PI) || inputLongitudeL > M_PI){
+            std::cout << "wrong longitude! " << inputLongitudeL << " is incorrect num!" << std::endl;
+            std::cout << "input a new num in radians:" << std::endl;
+            std::cin >> inputLongitudeL;
+        }
+        else {
+            break;
+        }
+    }
+    this->geodeticLatitudeB = inputLatitudeB;
+    this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
 }
 
 void CoordinatesWGS84::loadGeodeticToVector() {
-
+    vectorGeodeticLatitudeWGS84->push_back(getGeodeticLatitudeB());
+    vectorGeodeticLongitudeWGS84->push_back(getGeodeticLongitudeL());
 }
 
-void CoordinatesWGS84::getMemberFromGeodeticVector(int) {
-
+void CoordinatesWGS84::getMemberFromGeodeticVector(int vectorMember) {
+    if (vectorGeodeticLatitudeWGS84->empty() || vectorGeodeticLongitudeWGS84->empty()){
+        std::cout << "vector is empty!" << std::endl;
+    }
+    else{
+        setGeodeticCoordinates(vectorGeodeticLatitudeWGS84->at(vectorMember),
+                               vectorGeodeticLongitudeWGS84->at(vectorMember) * M_PI / 180);
+    }
 }
 
 void __attribute__((unused)) CoordinatesWGS84::getMemberFromRectangularVector(int) {}
@@ -43,3 +66,5 @@ void __attribute__((unused)) CoordinatesWGS84::loadRectangularToVector() {}
 void __attribute__((unused)) CoordinatesWGS84::fromGeodeticToRectangularVector() {}
 
 void __attribute__((unused)) CoordinatesWGS84::fromRectangularToGeodeticVector() {}
+
+void __attribute__((unused)) CoordinatesWGS84::setRectangularCoordinates(double, double) {}

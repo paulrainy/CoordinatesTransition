@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include <iostream>
 
 #include "CoordinatesPZ90.h"
 

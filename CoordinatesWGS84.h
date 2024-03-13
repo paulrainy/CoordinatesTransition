@@ -5,6 +5,8 @@
 #ifndef COORDINATESEX_COORDINATESWGS84_H
 #define COORDINATESEX_COORDINATESWGS84_H
 
+#include <gtest/gtest.h>
+
 #include "CoordinatesInterface.h"
 
 class CoordinatesWGS84 : protected CoordinatesInterface {
@@ -20,6 +22,8 @@ private:
     void getMemberFromGeodeticVector(int) override;
 
     void __attribute__((unused)) getMemberFromRectangularVector(int) override;
+
+    void __attribute__((unused)) setRectangularCoordinates(double, double) override;
 
     double __attribute__((unused)) getRectangularX() override;
     double __attribute__((unused)) getRectangularY() override;
