@@ -65,6 +65,14 @@ void __attribute__((unused)) CoordinatesSK42::fromGeodeticToRectangularVector() 
 
 void __attribute__((unused)) CoordinatesSK42::fromRectangularToGeodeticVector() {}
 
+int CoordinatesSK42::getSemiMajorAxisConst() {
+    return SEMI_MAJOR_AXIS_CONST;
+}
+
+double CoordinatesSK42::getCompressionConst() {
+    return COMPRESSION_CONST;
+}
+
 CoordinatesSK42::~CoordinatesSK42() = default;
 
 CoordinatesSK42::CoordinatesSK42() = default;

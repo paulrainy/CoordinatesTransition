@@ -33,11 +33,8 @@ CoordinatesWGS84 CoordinatesTranslation::getCoordinateObjectWGS84() {
 }
 
 void CoordinatesTranslation::PZ90toSK42() {
-
-}
-
-void CoordinatesTranslation::WGS84toSK42() {
-
+    coordinateObjectPZ90.geodeticToRectangular();
+    coordinateObjectSK42.setRectangularCoordinates(coordinateObjectPZ90.getRectangularX(), coordinateObjectPZ90.getRectangularY());
 }
 
 void CoordinatesTranslation::SK42toPZ90() {
@@ -48,11 +45,8 @@ void CoordinatesTranslation::SK42toPZ90() {
 //    };
 //    std::vector<double> deltaElements = {23.557, -140.844, -79.778};
 //    const double mElement = -0.228 * pow(10, -6);
-
-}
-
-void CoordinatesTranslation::WGS84toPZ90() {
-
+    coordinateObjectPZ90.setRectangularCoordinates(coordinateObjectSK42.getRectangularX(), coordinateObjectSK42.getRectangularY());
+    coordinateObjectPZ90.rectangularToGeodetic();
 }
 
 void CoordinatesTranslation::PZ90toWGS84() {
@@ -66,6 +60,15 @@ void CoordinatesTranslation::PZ90toWGS84() {
 //
 //    // Устанавливаем новые координаты
 //    setGeodeticCoordinates(latitudeWGS84, longitudeWGS84);
+
+}
+
+void CoordinatesTranslation::WGS84toPZ90() {
+
+}
+
+void CoordinatesTranslation::WGS84toSK42() {
+
 }
 
 void CoordinatesTranslation::SK42toWGS84() {

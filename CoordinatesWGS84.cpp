@@ -33,7 +33,7 @@ void CoordinatesWGS84::setGeodeticCoordinates(double inputLatitudeB, double inpu
         }
     }
     this->geodeticLatitudeB = inputLatitudeB;
-    this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
+    this->geodeticLongitudeL = inputLongitudeL;
 }
 
 void CoordinatesWGS84::loadGeodeticToVector() {
@@ -47,7 +47,7 @@ void CoordinatesWGS84::getMemberFromGeodeticVector(int vectorMember) {
     }
     else{
         setGeodeticCoordinates(vectorGeodeticLatitudeWGS84->at(vectorMember),
-                               vectorGeodeticLongitudeWGS84->at(vectorMember) * M_PI / 180);
+                               vectorGeodeticLongitudeWGS84->at(vectorMember));
     }
 }
 
@@ -68,3 +68,11 @@ void __attribute__((unused)) CoordinatesWGS84::fromGeodeticToRectangularVector()
 void __attribute__((unused)) CoordinatesWGS84::fromRectangularToGeodeticVector() {}
 
 void __attribute__((unused)) CoordinatesWGS84::setRectangularCoordinates(double, double) {}
+
+int CoordinatesWGS84::getSemiMajorAxisConst() {
+    return SEMI_MAJOR_AXIS_CONST;
+}
+
+double CoordinatesWGS84::getCompressionConst() {
+    return COMPRESSION_CONST;
+}

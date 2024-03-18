@@ -2,6 +2,32 @@
 // Created by paul on 02.08.23.
 //
 
+//  Греческий алфавит
+//  A 	α 	alpha 	    альфа
+//  B 	β 	beta 	    бета
+//  Г 	γ 	gamma 	    гамма
+//  Δ 	δ 	delta 	    дельта
+//  E 	ε 	epsilon     эпсилон
+//  Z 	ζ 	zeta 	    дзета
+//  H 	η 	eta 	    эта
+//  Θ 	θ 	theta 	    тета
+//  I 	ί 	iota 	    йота
+//  K 	κ 	kappa 	    каппа
+//  Λ 	λ 	lambda 	    ламбда
+//  M 	 	mu 	        мю
+//  N 	 	nu 	        ню
+//  Ξ 	ξ 	xi 	        кси
+//  O 	o 	omicron 	омикрон
+//  П 	π 	pi 	        пи
+//  P 	ρ 	rho 	    ро
+//  Σ 	σ 	sigma 	    сигма
+//  T 	τ 	tau 	    тау
+//  υ 	    upsilon 	ипсилон
+//  Ф 	φ 	phi 	 	фи
+//  Х 	χ 	chi 	    хи
+//  Ψ 	ψ 	psi 	    пси
+//  Ω 	ω 	omega 	    омега
+
 #ifndef COORDINATESEX_COORDINATESINTERFACE_H
 #define COORDINATESEX_COORDINATESINTERFACE_H
 
@@ -10,9 +36,13 @@
 #include <utility>
 #include <iostream>
 
+#include <gtest/gtest.h>
+
 class CoordinatesInterface {
 protected:
-    //здесь находятся универсальные методы!
+    virtual int getSemiMajorAxisConst() = 0; //геттер для большой полуоси
+    virtual double getCompressionConst() = 0; //геттер для сжатия общеземного эллипсоида
+
     virtual double getGeodeticLatitudeB() = 0; //геттер геодезической широты
     virtual double getGeodeticLongitudeL() = 0; //геттер геодезической долготы
     virtual double getRectangularX() = 0; //геттер прямоугольного X
