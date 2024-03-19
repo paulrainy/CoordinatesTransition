@@ -35,3 +35,21 @@ TEST(PZ90toSK42Test, Equivalence){
     EXPECT_EQ(3320593, round(testObject->getCoordinateObjectSK42().getRectangularX()));
     EXPECT_EQ(7596490, round(testObject->getCoordinateObjectSK42().getRectangularY()));
 }
+
+TEST(SK42toPZ90Test, Equivalence){
+    testObject->setCoordinateObjectSK42(3400000, 7600000);
+    testObject->SK42toPZ90();
+    std::cout << testObject->getCoordinateObjectPZ90().getGeodeticLatitudeB() << std::endl;
+    std::cout << testObject->getCoordinateObjectPZ90().getGeodeticLongitudeL() << std::endl;
+    EXPECT_EQ(0.536, round(testObject->getCoordinateObjectPZ90().getGeodeticLatitudeB() * 1000) / 1000);
+    EXPECT_EQ(0.699, round(testObject->getCoordinateObjectPZ90().getGeodeticLongitudeL() * 1000) / 1000);
+}
+
+TEST(PZ90toWGS84Test, Equivalence){
+    testObject->setCoordinateObjectPZ90(30 * M_PI / 180, 40 * M_PI / 180, true);
+    testObject->PZ90toWGS84();
+    std::cout << testObject->getCoordinateObjectWGS84().getGeodeticLatitudeB() << std::endl;
+    std::cout << testObject->getCoordinateObjectWGS84().getGeodeticLongitudeL() << std::endl;
+    EXPECT_EQ(30 * M_PI / 180 - 0.00036, testObject->getCoordinateObjectWGS84().getGeodeticLatitudeB());
+    EXPECT_EQ(40 * M_PI / 180 + 0.00018, testObject->getCoordinateObjectWGS84().getGeodeticLongitudeL());
+}

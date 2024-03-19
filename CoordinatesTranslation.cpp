@@ -60,17 +60,23 @@ void CoordinatesTranslation::PZ90toWGS84() {
 //
 //    // Устанавливаем новые координаты
 //    setGeodeticCoordinates(latitudeWGS84, longitudeWGS84);
-
+    coordinateObjectWGS84.setGeodeticCoordinates(
+            coordinateObjectPZ90.getGeodeticLatitudeB() - 0.00036, coordinateObjectPZ90.getGeodeticLongitudeL() + 0.00018);
 }
 
 void CoordinatesTranslation::WGS84toPZ90() {
-
+    coordinateObjectPZ90.setGeodeticCoordinates(
+            coordinateObjectWGS84.getGeodeticLatitudeB() + 0.00036, coordinateObjectWGS84.getGeodeticLongitudeL() - 0.00018);
 }
 
 void CoordinatesTranslation::WGS84toSK42() {
-
+    coordinateObjectPZ90.setGeodeticCoordinates(
+            coordinateObjectWGS84.getGeodeticLatitudeB() + 0.00036, coordinateObjectWGS84.getGeodeticLongitudeL() - 0.00018);
+    this->PZ90toSK42();
 }
 
 void CoordinatesTranslation::SK42toWGS84() {
-
+    this->SK42toPZ90();
+    coordinateObjectWGS84.setGeodeticCoordinates(
+            coordinateObjectPZ90.getGeodeticLatitudeB() - 0.00036, coordinateObjectPZ90.getGeodeticLongitudeL() + 0.00018);
 }
