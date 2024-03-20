@@ -16,6 +16,7 @@ private:
 
     double geodeticLatitudeB{};//геодезическая широта пз90 (B)
     double geodeticLongitudeL{}; //геодезическая долгота пз90 (L)
+    double geodeticHeightH{};
     double rectangularX{}; // ось X пз90
     double rectangularY{}; // ось Y пз90
 
@@ -54,6 +55,7 @@ public:
 
     double getGeodeticLatitudeB() override;
     double getGeodeticLongitudeL() override;
+    double getGeodeticHeightH() override;
     double getRectangularX() override;
     double getRectangularY() override;
 

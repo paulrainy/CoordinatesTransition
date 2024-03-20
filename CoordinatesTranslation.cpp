@@ -32,36 +32,46 @@ CoordinatesWGS84 CoordinatesTranslation::getCoordinateObjectWGS84() {
     return coordinateObjectWGS84;
 }
 
+void CoordinatesTranslation::geodeticToSpatial(int semiMajorAxisConst, double compressionConst,
+                                               double geodeticLatitudeB, double geodeticLongitudeL, double geodeticHeightH) {
+    double eccentricitySquared = 2 * compressionConst - pow(compressionConst, 2);
+    double firstVerticalCurvature = semiMajorAxisConst /
+            (1 - eccentricitySquared * pow(sin(geodeticLatitudeB), 2));
+    tempSpatialX = (firstVerticalCurvature + geodeticHeightH) * cos(geodeticLatitudeB) * cos(geodeticLongitudeL);
+    tempSpatialY = (firstVerticalCurvature + geodeticHeightH) * cos(geodeticLatitudeB) * sin(geodeticLongitudeL);
+    tempSpatialZ = ((1 - eccentricitySquared) * firstVerticalCurvature + geodeticHeightH) * sin(geodeticLatitudeB);
+}
+
+void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double compressionConst) {
+    double eccentricitySquared = 2 * compressionConst - pow(compressionConst, 2);
+    double helpD = sqrt(pow(tempSpatialX, 2) + pow(tempSpatialX, 2));
+    if (helpD ==0){
+        tempGeodeticLatitudeB = (M_PI /2) * (tempSpatialZ / abs(tempSpatialZ));
+        tempGeodeticLongitudeL = 0;
+        tempGeodeticHeightH = tempSpatialZ * sin(tempGeodeticLatitudeB) - semiMajorAxisConst *
+                sqrt(1 - eccentricitySquared * pow(sin(tempGeodeticLatitudeB), 2));
+    }
+    else{
+        double helpLa = abs(asin(tempSpatialY / helpD));
+        //далее по госту условия
+    }
+}
+
 void CoordinatesTranslation::PZ90toSK42() {
     coordinateObjectPZ90.geodeticToRectangular();
     coordinateObjectSK42.setRectangularCoordinates(coordinateObjectPZ90.getRectangularX(), coordinateObjectPZ90.getRectangularY());
 }
 
 void CoordinatesTranslation::SK42toPZ90() {
-//    std::vector<std::vector<double>> angularTransformationElements = {
-//            {1.0, -3,850439 * pow(10, -6), 1.679685 * pow(10, -6)},
-//            {3,850439 * pow(10, -6), 1.0, -1.115071 * pow(10, -8)},
-//            {-1.679685 * pow(10, -6), 1.115071 * pow(10, -8), 1.0}
-//    };
-//    std::vector<double> deltaElements = {23.557, -140.844, -79.778};
-//    const double mElement = -0.228 * pow(10, -6);
     coordinateObjectPZ90.setRectangularCoordinates(coordinateObjectSK42.getRectangularX(), coordinateObjectSK42.getRectangularY());
     coordinateObjectPZ90.rectangularToGeodetic();
 }
 
 void CoordinatesTranslation::PZ90toWGS84() {
-//    // Получаем текущие координаты
-//    double latitude = getGeodeticLatitudeB();
-//    double longitude = getGeodeticLongitudeL();
-//
-//    // Конвертируем координаты из ПЗ-90.11 в WGS84
-//    double latitudeWGS84 = latitude - 0.00036;
-//    double longitudeWGS84 = longitude + 0.00018;
-//
-//    // Устанавливаем новые координаты
-//    setGeodeticCoordinates(latitudeWGS84, longitudeWGS84);
-    coordinateObjectWGS84.setGeodeticCoordinates(
-            coordinateObjectPZ90.getGeodeticLatitudeB() - 0.00036, coordinateObjectPZ90.getGeodeticLongitudeL() + 0.00018);
+    this->geodeticToSpatial(coordinateObjectPZ90.getSemiMajorAxisConst(), coordinateObjectPZ90.getCompressionConst(),
+                      coordinateObjectPZ90.getGeodeticLatitudeB(), coordinateObjectPZ90.getGeodeticLongitudeL(),
+                      coordinateObjectPZ90.getGeodeticHeightH());
+
 }
 
 void CoordinatesTranslation::WGS84toPZ90() {
@@ -80,3 +90,4 @@ void CoordinatesTranslation::SK42toWGS84() {
     coordinateObjectWGS84.setGeodeticCoordinates(
             coordinateObjectPZ90.getGeodeticLatitudeB() - 0.00036, coordinateObjectPZ90.getGeodeticLongitudeL() + 0.00018);
 }
+

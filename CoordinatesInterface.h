@@ -45,6 +45,7 @@ protected:
 
     virtual double getGeodeticLatitudeB() = 0; //геттер геодезической широты
     virtual double getGeodeticLongitudeL() = 0; //геттер геодезической долготы
+    virtual double getGeodeticHeightH() = 0; //геттер геодезической высоты
     virtual double getRectangularX() = 0; //геттер прямоугольного X
     virtual double getRectangularY() = 0; //геттер прямоугольного Y
 

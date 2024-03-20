@@ -28,6 +28,7 @@ private:
 
     double __attribute__((unused)) getGeodeticLatitudeB() override;
     double __attribute__((unused)) getGeodeticLongitudeL() override;
+    double __attribute__((unused)) getGeodeticHeightH() override;
 
     void __attribute__((unused)) setGeodeticCoordinates(double, double) override;
 

@@ -15,6 +15,17 @@ private:
     CoordinatesSK42 coordinateObjectSK42;
     CoordinatesWGS84 coordinateObjectWGS84;
 
+    double tempSpatialX{};
+    double tempSpatialY{};
+    double tempSpatialZ{};
+
+    double tempGeodeticLatitudeB{};
+    double tempGeodeticLongitudeL{};
+    double tempGeodeticHeightH{};
+
+    void geodeticToSpatial(int, double, double, double, double);
+    void spacialToGeodetic(int, double);
+
 public:
     void setCoordinateObjectPZ90(double, double, bool);
     void setCoordinateObjectSK42(double, double);

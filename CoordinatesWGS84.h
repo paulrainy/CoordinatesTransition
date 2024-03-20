@@ -16,6 +16,7 @@ private:
 
     double geodeticLatitudeB{};
     double geodeticLongitudeL{};
+    double geodeticHeightH{};
 
     //вектор, содержащий набор геодезических широт
     std::vector<double> * vectorGeodeticLatitudeWGS84 = new std::vector<double>;
@@ -48,6 +49,7 @@ public:
 
     double getGeodeticLatitudeB() override;
     double getGeodeticLongitudeL() override;
+    double getGeodeticHeightH() override;
 
     void setGeodeticCoordinates(double, double) override;
 
