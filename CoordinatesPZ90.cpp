@@ -37,7 +37,7 @@ void CoordinatesPZ90::setGeodeticCoordinates(double inputLatitudeB, double input
         }
     }
     this->geodeticLatitudeB = inputLatitudeB;
-    this->geodeticLongitudeL = inputLongitudeL * 180 / M_PI;
+    this->geodeticLongitudeL = inputLongitudeL;
 }
 
 void CoordinatesPZ90::setRectangularCoordinates(double inputRectangularX, double inputRectangularY) {
@@ -70,7 +70,7 @@ double CoordinatesPZ90::powHelpL2() const {
 
 void CoordinatesPZ90::geodeticToRectangular() {
     geoB = getGeodeticLatitudeB(); //перевод широты для удобства переноса формулы (B)
-    geoL = getGeodeticLongitudeL(); //перевод долготы для удобства (L)
+    geoL = getGeodeticLongitudeL() * 180 / M_PI; //перевод долготы для удобства (L)
     geoZoneN = static_cast<int>((6.0 + geoL) / 6.0); //номер шести градусной зоны (n)
     geoDistL = (geoL - (3.0 + 6.0 * (geoZoneN - 1.0))) / 57.29577951; //расстояние от определённой точки до осевого меридиана зоны(l)
     geoAnswX = 6367558.4968 * geoB - sin (2 * geoB) * (16002.8900 + 66.9607 * sinHelpB(2) + 0.3515 * sinHelpB(4)
@@ -119,7 +119,7 @@ void CoordinatesPZ90::getMemberFromGeodeticVector(int vectorMember) {
     }
     else{
         setGeodeticCoordinates(vectorGeodeticLatitudePZ90->at(vectorMember),
-                               vectorGeodeticLongitudePZ90->at(vectorMember) * M_PI / 180);
+                               vectorGeodeticLongitudePZ90->at(vectorMember));
     }
 }
 
@@ -168,3 +168,15 @@ void CoordinatesPZ90::fromRectangularToGeodeticVector() {
         std::cout << "found difference between latitude and longitude vector!" << std::endl;
     }
 }
+
+int CoordinatesPZ90::getSemiMajorAxisConst() {
+    return SEMI_MAJOR_AXIS_CONST;
+}
+
+double CoordinatesPZ90::getCompressionConst() {
+    return COMPRESSION_CONST;
+}
+
+CoordinatesPZ90::~CoordinatesPZ90() = default;
+
+CoordinatesPZ90::CoordinatesPZ90() = default;
