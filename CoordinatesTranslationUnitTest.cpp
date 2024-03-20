@@ -53,3 +53,12 @@ TEST(PZ90toWGS84Test, Equivalence){
     EXPECT_EQ(30 * M_PI / 180 - 0.00036, testObject->getCoordinateObjectWGS84().getGeodeticLatitudeB());
     EXPECT_EQ(40 * M_PI / 180 + 0.00018, testObject->getCoordinateObjectWGS84().getGeodeticLongitudeL());
 }
+
+TEST(WGS84toPZ90Test, Equivalence){
+    testObject->setCoordinateObjectWGS84(30 * M_PI / 180, 40 * M_PI / 180);
+    testObject->WGS84toPZ90();
+    std::cout << testObject->getCoordinateObjectPZ90().getGeodeticLatitudeB() << std::endl;
+    std::cout << testObject->getCoordinateObjectPZ90().getGeodeticLongitudeL() << std::endl;
+    EXPECT_EQ(30 * M_PI / 180 + 0.00036, testObject->getCoordinateObjectPZ90().getGeodeticLatitudeB());
+    EXPECT_EQ(40 * M_PI / 180 - 0.00018, testObject->getCoordinateObjectPZ90().getGeodeticLongitudeL());
+}
