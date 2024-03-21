@@ -32,8 +32,7 @@ CoordinatesWGS84 CoordinatesTranslation::getCoordinateObjectWGS84() {
     return coordinateObjectWGS84;
 }
 
-void CoordinatesTranslation::geodeticToSpatial(int semiMajorAxisConst, double compressionConst,
-                                               double geodeticLatitudeB, double geodeticLongitudeL, double geodeticHeightH) {
+void CoordinatesTranslation::geodeticToSpatial(int semiMajorAxisConst, double compressionConst, double geodeticLatitudeB, double geodeticLongitudeL, double geodeticHeightH) {
     double eccentricitySquared = 2 * compressionConst - pow(compressionConst, 2);
     double firstVerticalCurvature = semiMajorAxisConst /
             (1 - eccentricitySquared * pow(sin(geodeticLatitudeB), 2));
@@ -42,19 +41,92 @@ void CoordinatesTranslation::geodeticToSpatial(int semiMajorAxisConst, double co
     tempSpatialZ = ((1 - eccentricitySquared) * firstVerticalCurvature + geodeticHeightH) * sin(geodeticLatitudeB);
 }
 
-void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double compressionConst) {
+void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double compressionConst, double spatialX, double spatialY, double spatialZ) {
     double eccentricitySquared = 2 * compressionConst - pow(compressionConst, 2);
-    double helpD = sqrt(pow(tempSpatialX, 2) + pow(tempSpatialX, 2));
-    if (helpD ==0){
-        tempGeodeticLatitudeB = (M_PI /2) * (tempSpatialZ / abs(tempSpatialZ));
+    //1 ход
+    double helpD = sqrt(pow(spatialX, 2) + pow(spatialX, 2));
+    //2 ход
+    if (helpD == 0){
+        tempGeodeticLatitudeB = (M_PI /2) * (spatialZ / abs(spatialZ));
         tempGeodeticLongitudeL = 0;
-        tempGeodeticHeightH = tempSpatialZ * sin(tempGeodeticLatitudeB) - semiMajorAxisConst *
+        tempGeodeticHeightH = spatialZ * sin(tempGeodeticLatitudeB) - semiMajorAxisConst *
                 sqrt(1 - eccentricitySquared * pow(sin(tempGeodeticLatitudeB), 2));
     }
     else{
-        double helpLa = abs(asin(tempSpatialY / helpD));
-        //далее по госту условия
+        double helpLa = abs(asin(spatialY / helpD));
+        if (spatialY < 0){
+            if (spatialX > 0) {
+                tempGeodeticLongitudeL = 2 * M_PI - helpLa;
+            }
+            else{
+                tempGeodeticLongitudeL = M_PI + helpLa;
+            }
+        }
+        else if (spatialY > 0){
+            if (spatialX < 0){
+                tempGeodeticLongitudeL = M_PI - helpLa;
+            }
+            else{
+                tempGeodeticLongitudeL = helpLa;
+            }
+        }
+        else{
+            if (spatialX < 0){
+                tempGeodeticLongitudeL = M_PI;
+            }
+            else{
+                tempGeodeticLongitudeL = 0;
+            }
+        }
     }
+    //3 ход
+    if (spatialZ == 0){
+        tempGeodeticLatitudeB = 0;
+        tempGeodeticHeightH = helpD - semiMajorAxisConst;
+    }
+    else{
+        double helpR = sqrt(pow(spatialX, 2) + pow(spatialY, 2) + pow(spatialZ, 2));
+        double helpC = asin(spatialZ / helpR);
+        double helpRo = (eccentricitySquared * semiMajorAxisConst) / 2 * helpR;
+        double helpS1 = 0;
+        double helpS2{}, helpB{}, checkD{};
+
+        while(true){
+            helpB = helpC + helpS1;
+            helpS2 = asin((helpRo * sin(2 * helpB)) / sqrt(1 - eccentricitySquared * pow(sin(helpB), 2)));
+            checkD = abs(helpS2 - helpS1);
+            if (checkD < pow(10, -4)){
+                tempGeodeticLatitudeB = helpB;
+                tempGeodeticHeightH = helpD * cos(tempGeodeticLatitudeB) + spatialZ * sin(tempGeodeticLatitudeB) -
+                        semiMajorAxisConst * sqrt(1 - eccentricitySquared * pow(sin(tempGeodeticLatitudeB), 2));
+                break;
+            }
+            else{
+                helpS1 = helpS2;
+            }
+        }
+    }
+}
+
+std::vector<std::vector<double>> CoordinatesTranslation::getCoeffMatrix(double inputPhiX, double inputPhiY, double inputPhiZ) {
+    std::vector<std::vector<double>> matrix = {
+            {1.0, inputPhiZ, -1.0 * inputPhiY},
+            {-1.0 * inputPhiZ, 1.0, inputPhiX},
+            {inputPhiY, -1.0 * inputPhiX, 1.0}
+    };
+    return matrix;
+}
+
+std::vector<double> CoordinatesTranslation::multiplyMatrix(std::vector<std::vector<double>> coeffMatrix, std::vector<double> coordMatrix) {
+    std::vector<double> resultMatrix;
+    for (auto i = 0; i < 3; i++){
+        double tempResult = 0;
+        for (auto j = 0; j < 3; j++){
+            tempResult += coeffMatrix[i][j] * coordMatrix[j];
+        }
+        resultMatrix.push_back(tempResult);
+    }
+    return resultMatrix;
 }
 
 void CoordinatesTranslation::PZ90toSK42() {
@@ -68,9 +140,30 @@ void CoordinatesTranslation::SK42toPZ90() {
 }
 
 void CoordinatesTranslation::PZ90toWGS84() {
+    //заполняем коэффициенты
+    phiX = -1.115071 * pow(10, -8);
+    phiY = 1.716240 * pow(10, -8);
+    phiZ = -2.041066 * pow(10, -8);
+    deltaX = -0.013;
+    deltaY = 0.106;
+    deltaZ = 0.022;
+    double helpM = -0.008 * pow(10, -6);
+    //получаем матрицу коэффициентов
+    std::vector<std::vector<double>> phiCoefficients = getCoeffMatrix(phiX, phiY, phiZ);
+    //переводим координаты из геодезических в пространственные
     this->geodeticToSpatial(coordinateObjectPZ90.getSemiMajorAxisConst(), coordinateObjectPZ90.getCompressionConst(),
                       coordinateObjectPZ90.getGeodeticLatitudeB(), coordinateObjectPZ90.getGeodeticLongitudeL(),
                       coordinateObjectPZ90.getGeodeticHeightH());
+
+    //задаём матрицу с пространственными координатами
+    std::vector<double> spatialMatrix = {tempSpatialX, tempSpatialY, tempSpatialZ};
+    //перемножаем матрицу с коэффициентами и изначальными координатами
+    std::vector<double> midMatrix = multiplyMatrix(phiCoefficients, spatialMatrix);
+    //умножаем каждый элемент промежуточной матрицы на 1-m
+    for (auto i = 0; i < 3; i++){
+        midMatrix[i] *= (1 - helpM);
+    }
+
 
 }
 
@@ -90,4 +183,6 @@ void CoordinatesTranslation::SK42toWGS84() {
     coordinateObjectWGS84.setGeodeticCoordinates(
             coordinateObjectPZ90.getGeodeticLatitudeB() - 0.00036, coordinateObjectPZ90.getGeodeticLongitudeL() + 0.00018);
 }
+
+
 

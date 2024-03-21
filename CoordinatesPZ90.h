@@ -16,7 +16,7 @@ private:
 
     double geodeticLatitudeB{};//геодезическая широта пз90 (B)
     double geodeticLongitudeL{}; //геодезическая долгота пз90 (L)
-    double geodeticHeightH{};
+    double geodeticHeightH{}; //геодезическая высота пз90 (H)
     double rectangularX{}; // ось X пз90
     double rectangularY{}; // ось Y пз90
 

@@ -11,20 +11,38 @@
 
 class CoordinatesTranslation {
 private:
+    //объекты классов координат
     CoordinatesPZ90 coordinateObjectPZ90;
     CoordinatesSK42 coordinateObjectSK42;
     CoordinatesWGS84 coordinateObjectWGS84;
 
+    //поля для временного хранения пространственных координат
     double tempSpatialX{};
     double tempSpatialY{};
     double tempSpatialZ{};
 
+    //поля для временного хранения геодезических координат
     double tempGeodeticLatitudeB{};
     double tempGeodeticLongitudeL{};
     double tempGeodeticHeightH{};
 
+    //поля для временного хранения коэффициентов phi
+    double phiX{};
+    double phiY{};
+    double phiZ{};
+
+    //поля для временного хранения коэффициентов delta
+    double deltaX{};
+    double deltaY{};
+    double deltaZ{};
+
+    //методы перевода координат
     void geodeticToSpatial(int, double, double, double, double);
-    void spacialToGeodetic(int, double);
+    void spacialToGeodetic(int, double, double, double, double);
+
+    //вспомогательные методы для работы с матрицами
+    std::vector<std::vector<double>> getCoeffMatrix(double, double, double);
+    std::vector<double> multiplyMatrix(std::vector<std::vector<double>>, std::vector<double>);
 
 public:
     void setCoordinateObjectPZ90(double, double, bool);
