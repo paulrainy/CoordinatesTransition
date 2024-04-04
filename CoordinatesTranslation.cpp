@@ -44,10 +44,10 @@ void CoordinatesTranslation::geodeticToSpatial(int semiMajorAxisConst, double co
 void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double compressionConst, double spatialX, double spatialY, double spatialZ) {
     double eccentricitySquared = 2 * compressionConst - pow(compressionConst, 2);
     //1 ход
-    double helpD = sqrt(pow(spatialX, 2) + pow(spatialX, 2));
+    double helpD = sqrt(pow(spatialX, 2) + pow(spatialY, 2));
     //2 ход
     if (helpD == 0){
-        tempGeodeticLatitudeB = (M_PI /2) * (spatialZ / abs(spatialZ));
+        tempGeodeticLatitudeB = (M_PI / 2) * (spatialZ / abs(spatialZ));
         tempGeodeticLongitudeL = 0;
         tempGeodeticHeightH = spatialZ * sin(tempGeodeticLatitudeB) - semiMajorAxisConst *
                 sqrt(1 - eccentricitySquared * pow(sin(tempGeodeticLatitudeB), 2));
@@ -87,13 +87,13 @@ void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double co
     else{
         double helpR = sqrt(pow(spatialX, 2) + pow(spatialY, 2) + pow(spatialZ, 2));
         double helpC = asin(spatialZ / helpR);
-        double helpRo = (eccentricitySquared * semiMajorAxisConst) / 2 * helpR;
+        double helpRo = (eccentricitySquared * semiMajorAxisConst) / (2 * helpR);
         double helpS1 = 0;
         double helpS2{}, helpB{}, checkD{};
 
         while(true){
             helpB = helpC + helpS1;
-            helpS2 = asin((helpRo * sin(2 * helpB)) / sqrt(1 - eccentricitySquared * pow(sin(helpB), 2)));
+            helpS2 = asin((helpRo * sin(2 * helpB)) / sqrt(1.0 - eccentricitySquared * pow(sin(helpB), 2)));
             checkD = abs(helpS2 - helpS1);
             if (checkD < pow(10, -4)){
                 tempGeodeticLatitudeB = helpB;
@@ -163,8 +163,16 @@ void CoordinatesTranslation::PZ90toWGS84() {
     for (auto i = 0; i < 3; i++){
         midMatrix[i] *= (1 - helpM);
     }
+    //вычитаем дельты
+    midMatrix[0] -= deltaX;
+    midMatrix[1] -= deltaY;
+    midMatrix[2] -= deltaZ;
+    //переводим пространственные координаты в геодезические
+    this->spacialToGeodetic(coordinateObjectWGS84.getSemiMajorAxisConst(), coordinateObjectWGS84.getCompressionConst(),
+                      midMatrix[0], midMatrix[1], midMatrix[2]);
 
-
+    //записываем значения в соответствующий объект
+    coordinateObjectWGS84.setGeodeticCoordinates(tempGeodeticLatitudeB, tempGeodeticLongitudeL);
 }
 
 void CoordinatesTranslation::WGS84toPZ90() {

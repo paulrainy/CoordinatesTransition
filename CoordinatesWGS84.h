@@ -9,9 +9,7 @@
 
 class CoordinatesWGS84 : protected CoordinatesInterface {
 private:
-    const double GEOCENTRIC_GRAVITATIONAL_CONST = 398600.5; //Геоцентрическая гравитационная постоянная Земли (с учетом атмосферы) (fM)
     const int SEMI_MAJOR_AXIS_CONST = 6378137; //Большая полуось
-    const double ANGULAR_VELOCITY_CONST = 7.292115 * pow(10, -5); //Угловая скорость вращения Земли
     const double COMPRESSION_CONST = 1.0 / 298.257223563; //Сжатие общеземного эллипсоида
 
     double geodeticLatitudeB{};

@@ -9,8 +9,6 @@
 
 class CoordinatesPZ90 : protected CoordinatesInterface{
 private:
-    const double GEOCENTRIC_GRAVITATIONAL_CONST = 398600.4418; //Геоцентрическая гравитационная постоянная Земли (с учетом атмосферы) (fM)
-    const double ANGULAR_VELOCITY_CONST = 7.292115 * pow(10, -5); //Угловая скорость вращения Земли
     const int SEMI_MAJOR_AXIS_CONST = 6378136; //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.25784; //Сжатие общеземного эллипсоида
 

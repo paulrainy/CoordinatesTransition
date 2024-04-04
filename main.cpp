@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "CoordinatesPZ90.h"
-#include "CoordinatesSK42.h"
+#include "CoordinatesTranslation.h"
 
 int main() {
     testing::InitGoogleTest();
