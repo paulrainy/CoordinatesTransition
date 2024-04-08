@@ -108,12 +108,22 @@ void CoordinatesTranslation::spacialToGeodetic(int semiMajorAxisConst, double co
     }
 }
 
-std::vector<std::vector<double>> CoordinatesTranslation::getCoeffMatrix(double inputPhiX, double inputPhiY, double inputPhiZ) {
-    std::vector<std::vector<double>> matrix = {
-            {1.0, inputPhiZ, -1.0 * inputPhiY},
-            {-1.0 * inputPhiZ, 1.0, inputPhiX},
-            {inputPhiY, -1.0 * inputPhiX, 1.0}
-    };
+std::vector<std::vector<double>> CoordinatesTranslation::getCoeffMatrix(double inputPhiX, double inputPhiY, double inputPhiZ, bool isDirect) {
+    std::vector<std::vector<double>> matrix;
+    if (isDirect){
+        matrix = {
+                {1.0, inputPhiZ, -inputPhiY},
+                {-inputPhiZ, 1.0, inputPhiX},
+                {inputPhiY, -inputPhiX, 1.0}
+        };
+    }
+    else{
+        matrix = {
+                {1.0, -inputPhiZ, inputPhiY},
+                {inputPhiZ, 1.0, -inputPhiX},
+                {-inputPhiY, inputPhiX, 1.0}
+        };
+    }
     return matrix;
 }
 
@@ -149,7 +159,7 @@ void CoordinatesTranslation::PZ90toWGS84() {
     deltaZ = 0.022;
     double helpM = -0.008 * pow(10, -6);
     //получаем матрицу коэффициентов
-    std::vector<std::vector<double>> phiCoefficients = getCoeffMatrix(phiX, phiY, phiZ);
+    std::vector<std::vector<double>> phiCoefficients = getCoeffMatrix(phiX, phiY, phiZ, false);
     //переводим координаты из геодезических в пространственные
     this->geodeticToSpatial(coordinateObjectPZ90.getSemiMajorAxisConst(), coordinateObjectPZ90.getCompressionConst(),
                       coordinateObjectPZ90.getGeodeticLatitudeB(), coordinateObjectPZ90.getGeodeticLongitudeL(),
@@ -176,8 +186,39 @@ void CoordinatesTranslation::PZ90toWGS84() {
 }
 
 void CoordinatesTranslation::WGS84toPZ90() {
-    coordinateObjectPZ90.setGeodeticCoordinates(
-            coordinateObjectWGS84.getGeodeticLatitudeB() + 0.00036, coordinateObjectWGS84.getGeodeticLongitudeL() - 0.00018);
+    //коэффициенты
+    phiX = -1.115071 * pow(10, -8);
+    phiY = 1.716240 * pow(10, -8);
+    phiZ = -2.041066 * pow(10, -8);
+    deltaX = -0.013;
+    deltaY = 0.106;
+    deltaZ = 0.022;
+    double helpM = -0.008 * pow(10, -6);
+    //получаем матрицу коэффициентов
+    std::vector<std::vector<double>> phiCoefficients = getCoeffMatrix(phiX, phiY, phiZ, true);
+    //переводим координаты из геодезических в пространственные
+    this->geodeticToSpatial(coordinateObjectWGS84.getSemiMajorAxisConst(), coordinateObjectWGS84.getCompressionConst(),
+                            coordinateObjectWGS84.getGeodeticLatitudeB(), coordinateObjectWGS84.getGeodeticLongitudeL(),
+                            coordinateObjectWGS84.getGeodeticHeightH());
+
+    //задаём матрицу с пространственными координатами
+    std::vector<double> spatialMatrix = {tempSpatialX, tempSpatialY, tempSpatialZ};
+    //перемножаем матрицу с коэффициентами и изначальными координатами
+    std::vector<double> midMatrix = multiplyMatrix(phiCoefficients, spatialMatrix);
+    //умножаем каждый элемент промежуточной матрицы на 1-m
+    for (auto i = 0; i < 3; i++){
+        midMatrix[i] *= (1 + helpM);
+    }
+    //складываем дельты
+    midMatrix[0] += deltaX;
+    midMatrix[1] += deltaY;
+    midMatrix[2] += deltaZ;
+    //переводим пространственные координаты в геодезические
+    this->spacialToGeodetic(coordinateObjectPZ90.getSemiMajorAxisConst(), coordinateObjectPZ90.getCompressionConst(),
+                            midMatrix[0], midMatrix[1], midMatrix[2]);
+
+    //записываем значения в соответствующий объект
+    coordinateObjectWGS84.setGeodeticCoordinates(tempGeodeticLatitudeB, tempGeodeticLongitudeL);
 }
 
 void CoordinatesTranslation::WGS84toSK42() {

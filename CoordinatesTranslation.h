@@ -41,7 +41,7 @@ private:
     void spacialToGeodetic(int, double, double, double, double);
 
     //вспомогательные методы для работы с матрицами
-    std::vector<std::vector<double>> getCoeffMatrix(double, double, double);
+    std::vector<std::vector<double>> getCoeffMatrix(double, double, double, bool);
     std::vector<double> multiplyMatrix(std::vector<std::vector<double>>, std::vector<double>);
 
 public:
