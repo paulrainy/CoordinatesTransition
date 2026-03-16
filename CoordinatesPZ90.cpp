@@ -177,6 +177,10 @@ double CoordinatesPZ90::getCompressionConst() {
     return COMPRESSION_CONST;
 }
 
+double CoordinatesPZ90::getGeodeticHeightH() {
+    return geodeticHeightH;
+}
+
 CoordinatesPZ90::~CoordinatesPZ90() = default;
 
 CoordinatesPZ90::CoordinatesPZ90() = default;

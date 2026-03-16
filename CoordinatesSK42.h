@@ -11,7 +11,6 @@ class CoordinatesSK42 : protected CoordinatesInterface {
 private:
     //ск42 подразумевает использование только плоских прямоугольных координат
     const int SEMI_MAJOR_AXIS_CONST = 6378245; //Большая полуось
-    const double ANGULAR_VELOCITY_CONST = 7.292115 * pow(10, -5); //Угловая скорость вращения Земли
     const double COMPRESSION_CONST = 1.0 / 298.3; //Сжатие общеземного эллипсоида
 
     double rectangularX{}; // ось X
@@ -28,6 +27,7 @@ private:
 
     double __attribute__((unused)) getGeodeticLatitudeB() override;
     double __attribute__((unused)) getGeodeticLongitudeL() override;
+    double __attribute__((unused)) getGeodeticHeightH() override;
 
     void __attribute__((unused)) setGeodeticCoordinates(double, double) override;
 

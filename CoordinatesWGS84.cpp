@@ -76,3 +76,7 @@ int CoordinatesWGS84::getSemiMajorAxisConst() {
 double CoordinatesWGS84::getCompressionConst() {
     return COMPRESSION_CONST;
 }
+
+double CoordinatesWGS84::getGeodeticHeightH() {
+    return geodeticHeightH;
+}

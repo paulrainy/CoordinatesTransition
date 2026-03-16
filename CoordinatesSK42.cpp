@@ -73,6 +73,8 @@ double CoordinatesSK42::getCompressionConst() {
     return COMPRESSION_CONST;
 }
 
+double __attribute__((unused)) CoordinatesSK42::getGeodeticHeightH() {}
+
 CoordinatesSK42::~CoordinatesSK42() = default;
 
 CoordinatesSK42::CoordinatesSK42() = default;

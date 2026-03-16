@@ -9,13 +9,12 @@
 
 class CoordinatesPZ90 : protected CoordinatesInterface{
 private:
-    const double GEOCENTRIC_GRAVITATIONAL_CONST = 398600.4418; //Геоцентрическая гравитационная постоянная Земли (с учетом атмосферы) (fM)
-    const double ANGULAR_VELOCITY_CONST = 7.292115 * pow(10, -5); //Угловая скорость вращения Земли
     const int SEMI_MAJOR_AXIS_CONST = 6378136; //Большая полуось
     const double COMPRESSION_CONST = 1.0 / 298.25784; //Сжатие общеземного эллипсоида
 
     double geodeticLatitudeB{};//геодезическая широта пз90 (B)
     double geodeticLongitudeL{}; //геодезическая долгота пз90 (L)
+    double geodeticHeightH{}; //геодезическая высота пз90 (H)
     double rectangularX{}; // ось X пз90
     double rectangularY{}; // ось Y пз90
 
@@ -54,6 +53,7 @@ public:
 
     double getGeodeticLatitudeB() override;
     double getGeodeticLongitudeL() override;
+    double getGeodeticHeightH() override;
     double getRectangularX() override;
     double getRectangularY() override;
 
